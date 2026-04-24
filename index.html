@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phiếu Tính Giá Flamingo Golden Hill - New Data Version</title>
+    <title>Phiếu Tính Giá Flamingo Golden Hill - Cập Nhật Chiết Khấu</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; color: #333; line-height: 1.6; margin: 0; padding: 20px;}
         .container { max-width: 1200px; margin: 10px auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
@@ -17,6 +17,7 @@
         .form-group label { font-weight: 600; margin-bottom: 8px; color: #4a5568; }
         .form-group input, .form-group select { padding: 12px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 16px; outline: none; transition: 0.2s; }
         .form-group input:focus, .form-group select:focus { border-color: #1a365d; box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1); }
+        .form-group input:disabled, .form-group select:disabled { background-color: #edf2f7; cursor: not-allowed; }
 
         .full-width { grid-column: span 3; }
         .mode-selector { background: #edf2f7; padding: 20px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 30px; align-items: center; justify-content: center; }
@@ -38,8 +39,9 @@
         #result-box { display: none; margin-top: 40px; padding-top: 30px; border-top: 2px solid #edf2f7; text-align: left; }
         .result-header { color: #1a365d; margin: 0; font-size: 22px; }
         
-        /* Cấu trúc hiển thị thông tin sản phẩm */
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        /* Cấu trúc hiển thị 2 cột mới */
+        .info-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 25px; }
+        .info-col { display: flex; flex-direction: column; gap: 12px; }
         .info-item { display: flex; justify-content: space-between; border-bottom: 1px dashed #ccc; padding-bottom: 5px; align-items: center;}
         .info-item span { color: #718096; font-size: 15px; }
         .info-item strong { color: #2d3748; font-size: 15px; }
@@ -100,6 +102,25 @@
                 <option value="30">Thanh toán nhanh trong 30 ngày (Chiết khấu 15%)</option>
             </select>
         </div>
+
+        <div class="form-group full-width" id="auto-extra-discount-box" style="background: #ebf8ff; padding: 15px; border-radius: 6px; border: 1px dashed #3182ce;">
+            <label style="display: flex; align-items: center; gap: 10px; margin: 0; cursor: pointer; color: #2b6cb0; font-size: 16px;">
+                <input type="checkbox" id="enable-extra" onchange="toggleExtraDetails()" style="width: 20px; height: 20px;">
+                <strong>Áp dụng thêm chiết khấu bổ sung (Tính trên Tổng giá bán)</strong>
+            </label>
+            
+            <div id="extra-details" style="display: none; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 15px;">
+                <select id="extra-type" onchange="toggleExtraType()">
+                    <option value="percent">Tính theo Tỷ lệ (%)</option>
+                    <option value="amount">Tính theo Số tiền (VNĐ)</option>
+                </select>
+                <select id="extra-vat">
+                    <option value="after-vat">Tính trên mốc giá SAU VAT</option>
+                    <option value="before-vat">Tính trên mốc giá TRƯỚC VAT</option>
+                </select>
+                <input type="number" id="extra-value" placeholder="Nhập số % hoặc số tiền..." step="0.1">
+            </div>
+        </div>
     </div>
 
     <div id="custom-discount-box" class="custom-discount-box no-print">
@@ -133,14 +154,18 @@
             </button>
         </div>
         
-        <div class="info-grid">
-            <div class="info-item"><span>Khách hàng:</span> <strong id="out-name"></strong></div>
-            <div class="info-item"><span>Mã căn:</span> <strong id="out-code"></strong></div>
-            <div class="info-item" style="grid-column: span 2;"><span>Phân loại sản phẩm:</span> <strong id="out-type"></strong></div>
-            <div class="info-item"><span>Diện tích đất:</span> <strong><span id="out-area"></span> m2</strong></div>
-            <div class="info-item"><span>Giá Đất (Gồm VAT):</span> <strong id="out-price-land"></strong></div>
-            <div class="info-item"><span>Giá Xây (Gồm VAT):</span> <strong id="out-price-build"></strong></div>
-            <div class="info-item"><span>Tổng Giá Niêm Yết:</span> <strong id="out-price-total"></strong></div>
+        <div class="info-grid-2col">
+            <div class="info-col">
+                <div class="info-item"><span>Khách hàng:</span> <strong id="out-name"></strong></div>
+                <div class="info-item"><span>Mã căn:</span> <strong id="out-code"></strong></div>
+                <div class="info-item"><span>Phân loại sản phẩm:</span> <strong id="out-type"></strong></div>
+                <div class="info-item"><span>Diện tích đất:</span> <strong><span id="out-area"></span> m2</strong></div>
+            </div>
+            <div class="info-col">
+                <div class="info-item"><span>Giá Đất (đã gồm VAT):</span> <strong id="out-price-land"></strong></div>
+                <div class="info-item"><span>Giá Xây (đã gồm VAT):</span> <strong id="out-price-build"></strong></div>
+                <div class="info-item" style="border-bottom: 2px solid #1a365d;"><span>Tổng Giá Niêm Yết (đã gồm VAT):</span> <strong id="out-price-total" style="font-size: 16px; color: #1a365d;"></strong></div>
+            </div>
         </div>
 
         <div class="price-highlight">
@@ -165,7 +190,6 @@
 <script>
     let masterData = [];
 
-    // Khởi tạo ứng dụng
     function initApp() {
         const statusEl = document.getElementById('data-status');
         const today = new Date();
@@ -189,6 +213,18 @@
     function toggleMode() {
         const mode = document.querySelector('input[name="calc-mode"]:checked').value;
         document.getElementById('custom-discount-box').style.display = (mode === 'custom' ? 'block' : 'none');
+        document.getElementById('auto-extra-discount-box').style.display = (mode === 'auto' ? 'block' : 'none');
+    }
+
+    function toggleExtraDetails() {
+        const isChecked = document.getElementById('enable-extra').checked;
+        document.getElementById('extra-details').style.display = isChecked ? 'grid' : 'none';
+    }
+
+    function toggleExtraType() {
+        const type = document.getElementById('extra-type').value;
+        // Nếu chọn trừ thẳng theo số tiền thì vô hiệu hóa lựa chọn Trước/Sau VAT
+        document.getElementById('extra-vat').disabled = (type === 'amount');
     }
 
     function addRow() {
@@ -200,7 +236,6 @@
         document.getElementById('custom-body').insertAdjacentHTML('beforeend', row);
     }
 
-    // Hàm xử lý số từ chuỗi có dấu phẩy và khoảng trắng (VD: " 9,235,372,000 ")
     function parseValue(val) {
         if (!val) return 0;
         return Number(String(val).replace(/[^0-9]/g, '')) || 0;
@@ -228,15 +263,12 @@
         if (masterData.length === 0) return alert("Hệ thống chưa tải xong dữ liệu!");
         if (!codeInput) return alert("Vui lòng nhập mã căn hộ!");
 
-        // Truy xuất theo đúng key "Ma_can"
         const apt = masterData.find(item => String(item.Ma_can).toUpperCase().trim() === codeInput);
-        
         if (!apt) return alert("Không tìm thấy mã căn: " + codeInput);
 
         const mode = document.querySelector('input[name="calc-mode"]:checked').value;
         const plan = document.getElementById('payment-plan').value;
 
-        // Ép kiểu số cho các trường tiền tệ
         let priceLand = parseValue(apt.Gia_Dat);
         let priceBuild = parseValue(apt.Gia_Xay);
         let basePrice = parseValue(apt.Tong_Gia);
@@ -244,8 +276,8 @@
         let currentPrice = basePrice;
         let breakdown = "";
 
-        // Logic chiết khấu trừ lùi
         if (mode === 'auto') {
+            // Bước 1: Trừ chiết khấu phương thức thanh toán
             if (plan === '12') {
                 let disc = currentPrice * 0.10;
                 breakdown += `• Chiết khấu tiến độ 12 tháng (10%): <strong>-${formatMoney(disc)}</strong><br>`;
@@ -255,7 +287,35 @@
                 breakdown += `• Chiết khấu thanh toán nhanh 30 ngày (15%): <strong>-${formatMoney(disc)}</strong><br>`;
                 currentPrice -= disc;
             }
+
+            // Bước 2: Trừ lùi chiết khấu bổ sung (nếu có)
+            if (document.getElementById('enable-extra').checked) {
+                let extraVal = parseFloat(document.getElementById('extra-value').value) || 0;
+                if (extraVal > 0) {
+                    let extraType = document.getElementById('extra-type').value;
+                    let extraVatType = document.getElementById('extra-vat').value;
+                    
+                    if (extraType === 'amount') {
+                        breakdown += `• Chiết khấu bổ sung bằng tiền mặt: <strong>-${formatMoney(extraVal)}</strong><br>`;
+                        currentPrice -= extraVal;
+                    } else { // percent
+                        // Mốc tính phụ thuộc vào Trước/Sau VAT (Giả định VAT 10%)
+                        let baseForPercent = currentPrice;
+                        let textVAT = "Giá Sau VAT";
+                        
+                        if (extraVatType === 'before-vat') {
+                            baseForPercent = currentPrice / 1.1;
+                            textVAT = "Giá Trước VAT";
+                        }
+                        
+                        let extraDisc = baseForPercent * (extraVal / 100);
+                        breakdown += `• Chiết khấu bổ sung ${extraVal}% (Tính trên mốc ${textVAT}): <strong>-${formatMoney(extraDisc)}</strong><br>`;
+                        currentPrice -= extraDisc;
+                    }
+                }
+            }
         } else {
+            // Chế độ ngoại giao
             const names = document.querySelectorAll('.c-name');
             const rates = document.querySelectorAll('.c-rate');
             names.forEach((n, idx) => {
@@ -271,7 +331,6 @@
         if (breakdown === "") breakdown = "<i>Không áp dụng chiết khấu.</i>";
         currentPrice = Math.round(currentPrice / 1000) * 1000;
 
-        // Hiển thị thông tin sản phẩm
         document.getElementById('out-name').innerText = document.getElementById('fullname').value || "Khách lẻ";
         document.getElementById('out-code').innerText = apt.Ma_can;
         document.getElementById('out-type').innerText = apt.Type || "N/A";
@@ -299,15 +358,14 @@
         let steps = [];
         if (plan === '30') {
             container.innerHTML = `
-                <div class="milestone-container">
-                    <div class="milestone"><strong>1. Đặt cọc:</strong> ${formatMoney(deposit)} (Ngày ${getFormattedDate(depositObj)})</div>
-                    <div class="milestone"><strong>2. Trong 30 ngày kể từ lúc cọc:</strong> ${formatMoney((finalPrice * 0.95) - deposit)} (Ngày ${calculateDate(depositObj, 30)})</div>
-                    <div class="milestone"><strong>3. Thông báo nhận GCN:</strong> ${formatMoney(finalPrice * 0.05)}</div>
+                <div class="milestone-container" style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+                    <div style="background: #ebf8ff; padding: 15px; border-left: 5px solid #3182ce; border-radius: 4px;"><strong>1. Đặt cọc:</strong> ${formatMoney(deposit)} (Ngày ${getFormattedDate(depositObj)})</div>
+                    <div style="background: #ebf8ff; padding: 15px; border-left: 5px solid #3182ce; border-radius: 4px;"><strong>2. Trong 30 ngày kể từ lúc cọc:</strong> ${formatMoney((finalPrice * 0.95) - deposit)} (Ngày ${calculateDate(depositObj, 30)})</div>
+                    <div style="background: #ebf8ff; padding: 15px; border-left: 5px solid #3182ce; border-radius: 4px;"><strong>3. Thông báo nhận GCN:</strong> ${formatMoney(finalPrice * 0.05)}</div>
                 </div>`;
             return;
         }
 
-        // Cập nhật tiến độ theo file Word đính kèm
         if (plan === '12') {
             steps = [
                 {d: "Lần 1_Ký HĐMB (Trong 10 ngày làm việc từ TTĐC)", t: "T", days: 0, p: 0.15},
