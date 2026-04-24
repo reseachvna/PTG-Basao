@@ -1,0 +1,426 @@
+[
+  {
+    "Ma_can": "LK1.02",
+    "Dien_tich": " 126.0 ",
+    "Gia_Dat": " 3,331,764,000 ",
+    "Gia_Xay": " 5,903,608,000 ",
+    "Tong_Gia": " 9,235,372,000 ",
+    "Type": "Chuẩn quốc tế, Siêu dòng tiền"
+  },
+  {
+    "Ma_can": "LK1.03",
+    "Dien_tich": " 126.0 ",
+    "Gia_Dat": " 3,234,722,000 ",
+    "Gia_Xay": " 5,903,608,000 ",
+    "Tong_Gia": " 9,138,330,000 ",
+    "Type": "Chuẩn quốc tế, Siêu dòng tiền"
+  },
+  {
+    "Ma_can": "LK1.03A",
+    "Dien_tich": " 126.0 ",
+    "Gia_Dat": " 3,234,722,000 ",
+    "Gia_Xay": " 5,903,608,000 ",
+    "Tong_Gia": " 9,138,330,000 ",
+    "Type": "Chuẩn quốc tế, Siêu dòng tiền"
+  },
+  {
+    "Ma_can": "LK1.05",
+    "Dien_tich": " 126.0 ",
+    "Gia_Dat": " 3,234,722,000 ",
+    "Gia_Xay": " 5,903,608,000 ",
+    "Tong_Gia": " 9,138,330,000 ",
+    "Type": "Chuẩn quốc tế, Siêu dòng tiền"
+  },
+  {
+    "Ma_can": "LK1.06",
+    "Dien_tich": " 126.0 ",
+    "Gia_Dat": " 3,234,722,000 ",
+    "Gia_Xay": " 5,903,608,000 ",
+    "Tong_Gia": " 9,138,330,000 ",
+    "Type": "Chuẩn quốc tế, Siêu dòng tiền"
+  },
+  {
+    "Ma_can": "LK1.07",
+    "Dien_tich": " 144.0 ",
+    "Gia_Dat": " 3,918,634,000 ",
+    "Gia_Xay": " 6,490,235,000 ",
+    "Tong_Gia": " 10,408,869,000 ",
+    "Type": "Chuẩn quốc tế, Siêu dòng tiền"
+  },
+  {
+    "Ma_can": "LK3.01",
+    "Dien_tich": " 127.0 ",
+    "Gia_Dat": " 4,564,552,000 ",
+    "Gia_Xay": " 6,151,018,000 ",
+    "Tong_Gia": " 10,715,570,000 ",
+    "Type": "Chuẩn quốc tế, Siêu dòng tiền"
+  },
+  {
+    "Ma_can": "LK8.15",
+    "Dien_tich": " 126.0 ",
+    "Gia_Dat": " 3,234,722,000 ",
+    "Gia_Xay": " 5,903,608,000 ",
+    "Tong_Gia": " 9,138,330,000 ",
+    "Type": "Chuẩn quốc tế, Siêu dòng tiền"
+  },
+  {
+    "Ma_can": "LK8.16",
+    "Dien_tich": " 126.0 ",
+    "Gia_Dat": " 3,234,722,000 ",
+    "Gia_Xay": " 5,903,608,000 ",
+    "Tong_Gia": " 9,138,330,000 ",
+    "Type": "Chuẩn quốc tế, Siêu dòng tiền"
+  },
+  {
+    "Ma_can": "LK8.17",
+    "Dien_tich": " 126.0 ",
+    "Gia_Dat": " 3,234,722,000 ",
+    "Gia_Xay": " 5,903,608,000 ",
+    "Tong_Gia": " 9,138,330,000 ",
+    "Type": "Chuẩn quốc tế, Siêu dòng tiền"
+  },
+  {
+    "Ma_can": "LK8.18",
+    "Dien_tich": " 126.0 ",
+    "Gia_Dat": " 3,234,722,000 ",
+    "Gia_Xay": " 5,903,608,000 ",
+    "Tong_Gia": " 9,138,330,000 ",
+    "Type": "Chuẩn quốc tế, Siêu dòng tiền"
+  },
+  {
+    "Ma_can": "LK8.19",
+    "Dien_tich": " 126.0 ",
+    "Gia_Dat": " 3,234,722,000 ",
+    "Gia_Xay": " 5,903,608,000 ",
+    "Tong_Gia": " 9,138,330,000 ",
+    "Type": "Chuẩn quốc tế, Siêu dòng tiền"
+  },
+  {
+    "Ma_can": "LK8.23",
+    "Dien_tich": " 126.0 ",
+    "Gia_Dat": " 3,234,722,000 ",
+    "Gia_Xay": " 5,903,608,000 ",
+    "Tong_Gia": " 9,138,330,000 ",
+    "Type": "Chuẩn quốc tế, Siêu dòng tiền"
+  },
+  {
+    "Ma_can": "LK8.24",
+    "Dien_tich": " 126.0 ",
+    "Gia_Dat": " 3,234,722,000 ",
+    "Gia_Xay": " 5,903,608,000 ",
+    "Tong_Gia": " 9,138,330,000 ",
+    "Type": "Chuẩn quốc tế, Siêu dòng tiền"
+  },
+  {
+    "Ma_can": "LK9.05",
+    "Dien_tich": " 126.0 ",
+    "Gia_Dat": " 3,396,458,000 ",
+    "Gia_Xay": " 5,903,608,000 ",
+    "Tong_Gia": " 9,300,066,000 ",
+    "Type": "Chuẩn quốc tế, Siêu dòng tiền"
+  },
+  {
+    "Ma_can": "LK9.06",
+    "Dien_tich": " 126.0 ",
+    "Gia_Dat": " 3,396,458,000 ",
+    "Gia_Xay": " 5,903,608,000 ",
+    "Tong_Gia": " 9,300,066,000 ",
+    "Type": "Chuẩn quốc tế, Siêu dòng tiền"
+  },
+  {
+    "Ma_can": "LK9.07",
+    "Dien_tich": " 126.0 ",
+    "Gia_Dat": " 3,396,458,000 ",
+    "Gia_Xay": " 5,903,608,000 ",
+    "Tong_Gia": " 9,300,066,000 ",
+    "Type": "Chuẩn quốc tế, Siêu dòng tiền"
+  },
+  {
+    "Ma_can": "LK1.01",
+    "Dien_tich": " 161.4 ",
+    "Gia_Dat": " 6,019,929,000 ",
+    "Gia_Xay": " 3,089,162,000 ",
+    "Tong_Gia": " 9,109,091,000 ",
+    "Type": " Đầu tư thông minh"
+  },
+  {
+    "Ma_can": "BT1.03A",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,164,366,000 ",
+    "Gia_Xay": " 2,916,955,000 ",
+    "Tong_Gia": " 8,081,321,000 ",
+    "Type": " Đầu tư thông minh"
+  },
+  {
+    "Ma_can": "BT1.05",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,319,298,000 ",
+    "Gia_Xay": " 2,916,955,000 ",
+    "Tong_Gia": " 8,236,253,000 ",
+    "Type": " Đầu tư thông minh"
+  },
+  {
+    "Ma_can": "BT1.06",
+    "Dien_tich": " 190.0 ",
+    "Gia_Dat": " 5,996,403,000 ",
+    "Gia_Xay": " 2,960,004,000 ",
+    "Tong_Gia": " 8,956,407,000 ",
+    "Type": " Đầu tư thông minh"
+  },
+  {
+    "Ma_can": "BT2.03",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,164,366,000 ",
+    "Gia_Xay": " 2,916,955,000 ",
+    "Tong_Gia": " 8,081,321,000 ",
+    "Type": " Đầu tư thông minh"
+  },
+  {
+    "Ma_can": "BT2.03A",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,164,366,000 ",
+    "Gia_Xay": " 2,908,790,000 ",
+    "Tong_Gia": " 8,073,156,000 ",
+    "Type": " Đầu tư thông minh"
+  },
+  {
+    "Ma_can": "BT2.05",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,319,298,000 ",
+    "Gia_Xay": " 2,916,955,000 ",
+    "Tong_Gia": " 8,236,253,000 ",
+    "Type": " Đầu tư thông minh"
+  },
+  {
+    "Ma_can": "BT3.08",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,319,298,000 ",
+    "Gia_Xay": " 2,916,955,000 ",
+    "Tong_Gia": " 8,236,253,000 ",
+    "Type": " Đầu tư thông minh"
+  },
+  {
+    "Ma_can": "BT3.10",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,164,366,000 ",
+    "Gia_Xay": " 2,908,790,000 ",
+    "Tong_Gia": " 8,073,156,000 ",
+    "Type": " Đầu tư thông minh"
+  },
+  {
+    "Ma_can": "BT3.11",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,319,298,000 ",
+    "Gia_Xay": " 2,916,955,000 ",
+    "Tong_Gia": " 8,236,253,000 ",
+    "Type": " Đầu tư thông minh"
+  },
+  {
+    "Ma_can": "BT5.02",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,319,298,000 ",
+    "Gia_Xay": " 2,916,955,000 ",
+    "Tong_Gia": " 8,236,253,000 ",
+    "Type": " Đầu tư thông minh"
+  },
+  {
+    "Ma_can": "BT5.03",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,164,366,000 ",
+    "Gia_Xay": " 2,916,955,000 ",
+    "Tong_Gia": " 8,081,321,000 ",
+    "Type": " Đầu tư thông minh"
+  },
+  {
+    "Ma_can": "BT5.05",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,319,298,000 ",
+    "Gia_Xay": " 2,916,955,000 ",
+    "Tong_Gia": " 8,236,253,000 ",
+    "Type": " Đầu tư thông minh"
+  },
+  {
+    "Ma_can": "BT5.15",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,164,366,000 ",
+    "Gia_Xay": " 2,908,790,000 ",
+    "Tong_Gia": " 8,073,156,000 ",
+    "Type": " Đầu tư thông minh"
+  },
+  {
+    "Ma_can": "BT5.16",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,164,366,000 ",
+    "Gia_Xay": " 2,916,955,000 ",
+    "Tong_Gia": " 8,081,321,000 ",
+    "Type": " Đầu tư thông minh"
+  },
+  {
+    "Ma_can": "BT5.17",
+    "Dien_tich": " 198.0 ",
+    "Gia_Dat": " 6,021,650,000 ",
+    "Gia_Xay": " 2,908,790,000 ",
+    "Tong_Gia": " 8,930,440,000 ",
+    "Type": " Đầu tư thông minh"
+  },
+  {
+    "Ma_can": "LK8.12B",
+    "Dien_tich": " 181.6 ",
+    "Gia_Dat": " 5,522,887,000 ",
+    "Gia_Xay": " 3,437,826,000 ",
+    "Tong_Gia": " 8,960,713,000 ",
+    "Type": "Tích sản sinh lời "
+  },
+  {
+    "Ma_can": "BT5.07",
+    "Dien_tich": " 198.0 ",
+    "Gia_Dat": " 6,021,650,000 ",
+    "Gia_Xay": " 2,916,955,000 ",
+    "Tong_Gia": " 8,938,605,000 ",
+    "Type": "Tích sản sinh lời "
+  },
+  {
+    "Ma_can": "BT5.09",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,164,366,000 ",
+    "Gia_Xay": " 2,916,955,000 ",
+    "Tong_Gia": " 8,081,321,000 ",
+    "Type": "Tích sản sinh lời "
+  },
+  {
+    "Ma_can": "BT5.10",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,164,366,000 ",
+    "Gia_Xay": " 2,908,790,000 ",
+    "Tong_Gia": " 8,073,156,000 ",
+    "Type": "Tích sản sinh lời "
+  },
+  {
+    "Ma_can": "LK2.03A",
+    "Dien_tich": " 105.0 ",
+    "Gia_Dat": " 4,066,938,000 ",
+    "Gia_Xay": " 2,976,906,000 ",
+    "Tong_Gia": " 7,043,844,000 ",
+    "Type": "Yên tâm sinh lời"
+  },
+  {
+    "Ma_can": "LK2.05",
+    "Dien_tich": " 105.0 ",
+    "Gia_Dat": " 4,066,938,000 ",
+    "Gia_Xay": " 2,976,906,000 ",
+    "Tong_Gia": " 7,043,844,000 ",
+    "Type": "Yên tâm sinh lời"
+  },
+  {
+    "Ma_can": "LK2.08",
+    "Dien_tich": " 105.0 ",
+    "Gia_Dat": " 4,066,938,000 ",
+    "Gia_Xay": " 2,976,906,000 ",
+    "Tong_Gia": " 7,043,844,000 ",
+    "Type": "Yên tâm sinh lời"
+  },
+  {
+    "Ma_can": "LK2.15",
+    "Dien_tich": " 105.0 ",
+    "Gia_Dat": " 4,066,938,000 ",
+    "Gia_Xay": " 2,976,906,000 ",
+    "Tong_Gia": " 7,043,844,000 ",
+    "Type": "Yên tâm sinh lời"
+  },
+  {
+    "Ma_can": "LK2.16",
+    "Dien_tich": " 105.0 ",
+    "Gia_Dat": " 4,066,938,000 ",
+    "Gia_Xay": " 2,976,906,000 ",
+    "Tong_Gia": " 7,043,844,000 ",
+    "Type": "Yên tâm sinh lời"
+  },
+  {
+    "Ma_can": "LK5.11",
+    "Dien_tich": " 105.0 ",
+    "Gia_Dat": " 4,066,938,000 ",
+    "Gia_Xay": " 2,976,906,000 ",
+    "Tong_Gia": " 7,043,844,000 ",
+    "Type": "Yên tâm sinh lời"
+  },
+  {
+    "Ma_can": "LK5.15",
+    "Dien_tich": " 105.0 ",
+    "Gia_Dat": " 4,066,938,000 ",
+    "Gia_Xay": " 2,976,906,000 ",
+    "Tong_Gia": " 7,043,844,000 ",
+    "Type": "Yên tâm sinh lời"
+  },
+  {
+    "Ma_can": "LK5.16",
+    "Dien_tich": " 105.0 ",
+    "Gia_Dat": " 4,157,315,000 ",
+    "Gia_Xay": " 2,976,906,000 ",
+    "Tong_Gia": " 7,134,221,000 ",
+    "Type": "Yên tâm sinh lời"
+  },
+  {
+    "Ma_can": "BT2.08",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,577,515,000 ",
+    "Gia_Xay": " 4,478,354,000 ",
+    "Tong_Gia": " 10,055,869,000 ",
+    "Type": "Yên tâm sinh lời"
+  },
+  {
+    "Ma_can": "BT2.09",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,422,585,000 ",
+    "Gia_Xay": " 4,478,354,000 ",
+    "Tong_Gia": " 9,900,939,000 ",
+    "Type": "Yên tâm sinh lời"
+  },
+  {
+    "Ma_can": "BT2.10",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,422,585,000 ",
+    "Gia_Xay": " 4,465,818,000 ",
+    "Tong_Gia": " 9,888,403,000 ",
+    "Type": "Yên tâm sinh lời"
+  },
+  {
+    "Ma_can": "BT2.11",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,577,515,000 ",
+    "Gia_Xay": " 4,478,354,000 ",
+    "Tong_Gia": " 10,055,869,000 ",
+    "Type": "Yên tâm sinh lời"
+  },
+  {
+    "Ma_can": "BT3.05",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,680,803,000 ",
+    "Gia_Xay": " 4,478,354,000 ",
+    "Tong_Gia": " 10,159,157,000 ",
+    "Type": "Yên tâm sinh lời"
+  },
+  {
+    "Ma_can": "BT3.03A",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,525,872,000 ",
+    "Gia_Xay": " 13,325,171,000 ",
+    "Tong_Gia": " 18,851,043,000 ",
+    "Type": "Chìa khóa trao tay"
+  },
+  {
+    "Ma_can": "BT3.03",
+    "Dien_tich": " 180.0 ",
+    "Gia_Dat": " 5,525,872,000 ",
+    "Gia_Xay": " 9,710,030,000 ",
+    "Tong_Gia": " 15,235,902,000 ",
+    "Type": "Chìa khóa trao tay"
+  },
+  {
+    "Ma_can": "LK5.12A",
+    "Dien_tich": " 120.0 ",
+    "Gia_Dat": " 4,854,504,000 ",
+    "Gia_Xay": " 5,807,024,000 ",
+    "Tong_Gia": " 10,661,528,000 ",
+    "Type": "Chìa khóa trao tay"
+  }
+]
