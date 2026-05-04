@@ -18,7 +18,7 @@
         .sale-greeting-box { text-align: right; margin-bottom: 10px; font-size: 14px; color: #4a5568; }
 
         .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: left; margin-bottom: 30px; }
-        .form-group { display: flex; flex-direction: column; }
+        .form-group { display: flex; flex-direction: column; position: relative; }
         .form-group label { font-weight: 600; margin-bottom: 8px; color: #4a5568; }
         .form-group input, .form-group select { padding: 12px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 16px; outline: none; transition: 0.2s; }
         .form-group input:focus, .form-group select:focus { border-color: #1a365d; box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1); }
@@ -68,6 +68,8 @@
 
         .copyright-footer { text-align: right; margin-top: 20px; border-top: 1px dashed #cbd5e0; padding-top: 10px; font-size: 12px; color: #a0aec0; font-style: italic; }
         .copyright-footer strong { color: #4a5568; font-weight: bold; font-style: normal;}
+        
+        #type-warning { display: none; color: #e53e3e; font-size: 13px; font-style: italic; margin-top: 8px; font-weight: bold; }
 
         /* CSS ÉP TRANG A4 VÀ MOBILE */
         @page { size: A4 portrait; margin: 10mm 10mm; }
@@ -131,7 +133,7 @@
 
     <div style="text-align: center;" class="no-print">
         <h1>Bảng tính giá & Tiến độ thanh toán</h1>
-        <h2>Dự án Flamingo Golden Hill</h2>
+        <h2>Dự án Flamingo Ba Sao</h2>
         <div id="data-status">⏳ Đang khởi động hệ thống...</div>
     </div>
 
@@ -147,7 +149,7 @@
         </div>
         <div class="form-group">
             <label>Mã căn hộ</label>
-            <input type="text" id="apt-code" placeholder="Ví dụ: LK1.02">
+            <input type="text" id="apt-code" placeholder="Nhập mã căn..." oninput="handleAptCodeChange()">
         </div>
         <div class="form-group">
             <label>Ngày đặt cọc</label>
@@ -158,15 +160,16 @@
             <label>Phương thức thanh toán</label>
             <select id="payment-plan">
                 <option value="36">Tiến độ chuẩn 36 tháng</option>
-                <option value="12">Tiến độ 12 tháng (Chiết khấu 10%)</option>
-                <option value="30">Thanh toán nhanh trong 30 ngày (Chiết khấu 15%)</option>
+                <option value="12">Tiến độ 12 tháng</option>
+                <option value="30">Thanh toán nhanh trong 30 ngày</option>
             </select>
+            <div id="type-warning"></div>
         </div>
 
         <div class="form-group full-width" id="auto-extra-discount-box" style="background: #ebf8ff; padding: 15px; border-radius: 6px; border: 1px dashed #3182ce;">
             <label style="display: flex; align-items: center; gap: 10px; margin: 0; cursor: pointer; color: #2b6cb0; font-size: 16px;">
                 <input type="checkbox" id="enable-extra" onchange="toggleExtraDetails()" style="width: 20px; height: 20px;">
-                <strong>Áp dụng thêm chiết khấu bổ sung (Tính trên Tổng giá bán)</strong>
+                <strong>Áp dụng chiết khấu bổ sung (Tính trên Tổng giá bán)</strong>
             </label>
             
             <div id="extra-details" style="display: none; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 15px;">
@@ -203,7 +206,7 @@
     <div id="result-box">
         <div style="text-align: center; display: none; margin-bottom: 30px;" id="print-title-area">
             <h1>Bảng tính giá & Tiến độ thanh toán</h1>
-            <h2>Dự án Flamingo Golden Hill</h2>
+            <h2>Dự án Flamingo Ba Sao</h2>
         </div>
 
         <div class="print-header-actions">
@@ -292,6 +295,43 @@
         }
     }
 
+    // ===== HÀM HỖ TRỢ ĐỌC KEY JSON BẤT KỲ =====
+    const layGiaTriCot = (item, tenCotCanTim) => {
+        const keyThucTe = Object.keys(item).find(k => k.trim().toLowerCase() === tenCotCanTim.toLowerCase());
+        return keyThucTe ? item[keyThucTe] : null;
+    };
+
+    // ===== XỬ LÝ KHÓA CỨNG KHI TYPE LÀ CHUẨN QUỐC TẾ/SIÊU DÒNG TIỀN =====
+    function handleAptCodeChange() {
+        const codeInput = document.getElementById('apt-code').value.toUpperCase().trim();
+        const planSelect = document.getElementById('payment-plan');
+        const warningEl = document.getElementById('type-warning');
+
+        // Mặc định trả về đủ 3 option
+        planSelect.innerHTML = `
+            <option value="36">Tiến độ chuẩn 36 tháng</option>
+            <option value="12">Tiến độ 12 tháng</option>
+            <option value="30">Thanh toán nhanh trong 30 ngày</option>
+        `;
+        warningEl.style.display = 'none';
+
+        if (masterData.length === 0 || !codeInput) return;
+
+        const apt = masterData.find(item => {
+            const maCan = layGiaTriCot(item, "ma_can") || layGiaTriCot(item, "Ma_can");
+            return maCan && String(maCan).toUpperCase().trim() === codeInput;
+        });
+
+        if (apt) {
+            const typeValue = String(layGiaTriCot(apt, "Type") || layGiaTriCot(apt, "loai_can") || "").toUpperCase();
+            if (typeValue.includes("CHUẨN QUỐC TẾ") || typeValue.includes("SIÊU DÒNG TIỀN")) {
+                planSelect.innerHTML = `<option value="12">Tiến độ 12 tháng</option>`;
+                warningEl.innerHTML = "⚠️ Sản phẩm Chuẩn quốc tế / Siêu dòng tiền: Bắt buộc chọn Tiến độ 12 tháng.";
+                warningEl.style.display = 'block';
+            }
+        }
+    }
+
     // ===== KHỞI TẠO APP =====
     function initApp() {
         checkSalesLogin();
@@ -362,193 +402,4 @@
         return getFormattedDate(d);
     }
 
-    // ===== HÀM GỬI DỮ LIỆU LÊN GOOGLE SHEET ====
-    function sendDataToSheet(khachHang, maCan, giaNY, tongCK, giaSauCK) {
-        const saleInfoStr = localStorage.getItem('saleInfo');
-        let saleName = "Chưa khai báo";
-        let salePhone = "Chưa khai báo";
-        
-        if (saleInfoStr) {
-            const info = JSON.parse(saleInfoStr);
-            saleName = info.name;
-            salePhone = info.phone;
-        }
-
-        const payload = {
-            saleName: saleName,
-            salePhone: salePhone,
-            khachHang: khachHang,
-            maCan: maCan,
-            giaNiemYet: giaNY,
-            tongChietKhau: tongCK,
-            giaSauCK: giaSauCK
-        };
-
-        fetch("https://script.google.com/macros/s/AKfycbx9ci5WFYmRsY-bvpQmVU01_Pbzi2Mns1gFGqiZxgllE7noYM_gLLFTC44qAfdclQxEmQ/exec", {
-            method: 'POST',
-            mode: 'no-cors', 
-            headers: {
-                'Content-Type': 'text/plain;charset=utf-8',
-            },
-            body: JSON.stringify(payload)
-        }).catch(err => console.log("Lưu log sheet thất bại:", err));
-    }
-
-    function calculate() {
-        const codeInput = document.getElementById('apt-code').value.toUpperCase().trim();
-        const depositDate = document.getElementById('deposit-date').value;
-        const khachHang = document.getElementById('fullname').value || "Khách lẻ";
-        
-        if (masterData.length === 0) return alert("Hệ thống chưa tải xong dữ liệu!");
-        if (!codeInput) return alert("Vui lòng nhập mã căn hộ!");
-
-        const apt = masterData.find(item => String(item.Ma_can).toUpperCase().trim() === codeInput);
-        if (!apt) return alert("Không tìm thấy mã căn: " + codeInput);
-
-        const mode = document.querySelector('input[name="calc-mode"]:checked').value;
-        const plan = document.getElementById('payment-plan').value;
-
-        // Dùng hàm cleanAndParsePrice mới để tránh lỗi NaN
-        let priceLand = cleanAndParsePrice(apt.Gia_Dat);
-        let priceBuild = cleanAndParsePrice(apt.Gia_Xay);
-        let basePrice = cleanAndParsePrice(apt.Tong_Gia);
-        
-        let currentPrice = basePrice;
-        let breakdown = "";
-
-        if (mode === 'auto') {
-            if (plan === '12') {
-                let disc = currentPrice * 0.10;
-                breakdown += `• Chiết khấu tiến độ 12 tháng (10%): <strong>-${formatMoney(disc)}</strong><br>`;
-                currentPrice -= disc;
-            } else if (plan === '30') {
-                let disc = currentPrice * 0.15;
-                breakdown += `• Chiết khấu thanh toán nhanh 30 ngày (15%): <strong>-${formatMoney(disc)}</strong><br>`;
-                currentPrice -= disc;
-            }
-
-            if (document.getElementById('enable-extra').checked) {
-                let extraVal = parseFloat(document.getElementById('extra-value').value) || 0;
-                if (extraVal > 0) {
-                    let extraType = document.getElementById('extra-type').value;
-                    let extraVatType = document.getElementById('extra-vat').value;
-                    
-                    if (extraType === 'amount') {
-                        breakdown += `• Chiết khấu bổ sung bằng tiền mặt: <strong>-${formatMoney(extraVal)}</strong><br>`;
-                        currentPrice -= extraVal;
-                    } else { 
-                        let baseForPercent = currentPrice;
-                        let textVAT = "Giá Sau VAT";
-                        
-                        if (extraVatType === 'before-vat') {
-                            baseForPercent = currentPrice / 1.1;
-                            textVAT = "Giá Trước VAT";
-                        }
-                        
-                        let extraDisc = baseForPercent * (extraVal / 100);
-                        breakdown += `• Chiết khấu bổ sung ${extraVal}% (Tính trên mốc ${textVAT}): <strong>-${formatMoney(extraDisc)}</strong><br>`;
-                        currentPrice -= extraDisc;
-                    }
-                }
-            }
-        } else {
-            const names = document.querySelectorAll('.c-name');
-            const rates = document.querySelectorAll('.c-rate');
-            names.forEach((n, idx) => {
-                let r = parseFloat(rates[idx].value) / 100;
-                if (r > 0) {
-                    let disc = currentPrice * r;
-                    breakdown += `• ${n.value || 'Chiết khấu thủ công'} (${rates[idx].value}%): <strong>-${formatMoney(disc)}</strong><br>`;
-                    currentPrice -= disc;
-                }
-            });
-        }
-
-        if (breakdown === "") breakdown = "<i>Không áp dụng chiết khấu.</i>";
-        currentPrice = Math.round(currentPrice / 1000) * 1000;
-
-        document.getElementById('out-name').innerText = khachHang;
-        document.getElementById('out-code').innerText = apt.Ma_can;
-        document.getElementById('out-type').innerText = apt.Type || "N/A";
-        document.getElementById('out-area').innerText = apt.Dien_tich || "0";
-        document.getElementById('out-price-land').innerText = formatMoney(priceLand);
-        document.getElementById('out-price-build').innerText = formatMoney(priceBuild);
-        document.getElementById('out-price-total').innerText = formatMoney(basePrice);
-        document.getElementById('out-price-final').innerText = formatMoney(currentPrice);
-        document.getElementById('discount-breakdown').innerHTML = breakdown;
-
-        renderSchedule(plan, currentPrice, depositDate);
-        document.getElementById('result-box').style.display = 'block';
-        window.scrollTo({ top: document.getElementById('result-box').offsetTop, behavior: 'smooth' });
-
-        // Bắn dữ liệu về Sheet
-        sendDataToSheet(khachHang, apt.Ma_can, basePrice, basePrice - currentPrice, currentPrice);
-    }
-
-    function renderSchedule(plan, finalPrice, depositDateStr) {
-        const container = document.getElementById('schedule-content');
-        container.innerHTML = "";
-        const deposit = 100000000;
-
-        let depositObj = new Date(depositDateStr);
-        let hdmbObj = new Date(depositDateStr);
-        hdmbObj.setDate(hdmbObj.getDate() + 10); 
-        
-        let steps = [];
-        if (plan === '30') {
-            container.innerHTML = `
-                <div class="milestone-container" style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
-                    <div style="background: #ebf8ff; padding: 15px; border-left: 5px solid #3182ce; border-radius: 4px;"><strong>1. Đặt cọc:</strong> ${formatMoney(deposit)} (Ngày ${getFormattedDate(depositObj)})</div>
-                    <div style="background: #ebf8ff; padding: 15px; border-left: 5px solid #3182ce; border-radius: 4px;"><strong>2. Trong 30 ngày kể từ lúc cọc:</strong> ${formatMoney((finalPrice * 0.95) - deposit)} (Ngày ${calculateDate(depositObj, 30)})</div>
-                    <div style="background: #ebf8ff; padding: 15px; border-left: 5px solid #3182ce; border-radius: 4px;"><strong>3. Thông báo nhận GCN:</strong> ${formatMoney(finalPrice * 0.05)}</div>
-                </div>`;
-            return;
-        }
-
-        if (plan === '12') {
-            steps = [
-                {d: "Lần 1_Ký HĐMB (Trong 10 ngày làm việc từ TTĐC)", t: "T", days: 0, p: 0.15},
-                {d: "Lần 2_HĐMB (Trong 60 ngày từ khi ký HĐMB)", t: "T+60", days: 60, p: 0.10},
-                {d: "Lần 3_HĐMB (Trong 120 ngày từ khi ký HĐMB)", t: "T+120", days: 120, p: 0.10},
-                {d: "Lần 4_HĐMB (Trong 180 ngày từ khi ký HĐMB)", t: "T+180", days: 180, p: 0.15},
-                {d: "Lần 5_HĐMB (Trong 240 ngày từ khi ký HĐMB)", t: "T+240", days: 240, p: 0.10},
-                {d: "Lần 6_HĐMB (Trong 300 ngày từ khi ký HĐMB)", t: "T+300", days: 300, p: 0.10},
-                {d: "Lần 7_Thông báo bàn giao (Dự kiến)", t: "T+360", days: 360, p: 0.25},
-                {d: "Lần 8_Thông báo nhận GCN", t: "Theo TB", days: null, p: 0.05}
-            ];
-        } else {
-            steps = [
-                {d: "Lần 1_Ký HĐMB (Trong 10 ngày làm việc từ TTĐC)", t: "T", days: 0, p: 0.15},
-                {d: "Lần 2_HĐMB (Trong 120 ngày từ khi ký HĐMB)", t: "T+120", days: 120, p: 0.10},
-                {d: "Lần 3_HĐMB (Trong 240 ngày từ khi ký HĐMB)", t: "T+240", days: 240, p: 0.10},
-                {d: "Lần 4_HĐMB (Trong 360 ngày từ khi ký HĐMB)", t: "T+360", days: 360, p: 0.15},
-                {d: "Lần 5_HĐMB (Trong 480 ngày từ khi ký HĐMB)", t: "T+480", days: 480, p: 0.05},
-                {d: "Lần 6_HĐMB (Trong 600 ngày từ khi ký HĐMB)", t: "T+600", days: 600, p: 0.05},
-                {d: "Lần 7_HĐMB (Trong 720 ngày từ khi ký HĐMB)", t: "T+720", days: 720, p: 0.05},
-                {d: "Lần 8_HĐMB (Trong 840 ngày từ khi ký HĐMB)", t: "T+840", days: 840, p: 0.05},
-                {d: "Lần 9_Thông báo bàn giao Nhà Ở", t: "T+36 Th", days: 1080, p: 0.25},
-                {d: "Lần 10_Thông báo nhận GCN", t: "Theo TB", days: null, p: 0.05}
-            ];
-        }
-
-        let html = `<table class="schedule-table">
-            <tr><th>Tiến độ</th><th>Thời hạn</th><th>Dự kiến</th><th>Tỷ lệ</th><th>Số tiền</th></tr>
-            <tr style="background:#fff5f5"><td><strong>Đặt cọc</strong></td><td class="td-center">-</td><td class="td-center">${getFormattedDate(depositObj)}</td><td class="td-center">-</td><td class="td-right">${formatMoney(deposit)}</td></tr>`;
-        
-        steps.forEach((s, i) => {
-            let amt = Math.round((finalPrice * s.p) / 1000) * 1000;
-            let note = (i === 0) ? `<br><small>Đã gồm cọc. Chuyển thêm: ${formatMoney(amt - deposit)}</small>` : "";
-            html += `<tr><td>${s.d}</td><td class="td-center">${s.t}</td><td class="td-center">${calculateDate(hdmbObj, s.days)}</td><td class="td-center">${s.p*100}%</td><td class="td-right"><strong>${formatMoney(amt)}</strong>${note}</td></tr>`;
-        });
-        html += `<tr style="background:#edf2f7"><td colspan="3" class="td-right"><strong>Tổng cộng:</strong></td><td class="td-center">100%</td><td class="td-right"><strong style="color:#e53e3e">${formatMoney(finalPrice)}</strong></td></tr></table>`;
-        container.innerHTML = html;
-    }
-
-    function inPhieu() {
-        document.getElementById('print-title-area').style.display = 'block';
-        window.print();
-        setTimeout(() => document.getElementById('print-title-area').style.display = 'none', 500);
-    }
-</script>
-</body>
-</html>
+    // ===== HÀM GỬI D
