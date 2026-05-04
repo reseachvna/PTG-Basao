@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phiếu Tính Giá Flamingo Golden Hill</title>
+    <title>Phiếu Tính Giá Flamingo Ba Sao</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; color: #333; line-height: 1.6; margin: 0; padding: 20px;}
         .container { max-width: 1200px; margin: 10px auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative;}
@@ -27,17 +27,21 @@
         .mode-selector { background: #edf2f7; padding: 20px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 30px; align-items: center; justify-content: center; }
         .mode-selector label { cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 8px; }
         
+        /* Chiết khấu bổ sung Box */
+        .extra-discount-container { background: #ebf8ff; border: 1px dashed #3182ce; padding: 20px; border-radius: 8px; margin-top: 10px; }
         .custom-discount-box { background: #fffaf0; border: 1px dashed #ed8936; padding: 20px; border-radius: 8px; margin-top: 10px; display: none; }
-        .custom-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
-        .custom-table input { width: 90%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
-        .btn-add { background: #2b6cb0; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; }
+        
+        .custom-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+        .custom-table th { font-size: 13px; color: #4a5568; text-align: left; padding-bottom: 8px; }
+        .custom-table input, .custom-table select { width: 95%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }
+        
+        .btn-add { background: #2b6cb0; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 13px; }
         .btn-remove { background: #e53e3e; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold;}
 
         .btn-main { background: #1a365d; color: white; border: none; padding: 18px 40px; border-radius: 30px; font-size: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%; margin-top: 10px; }
         .btn-main:hover { background: #2c5282; transform: translateY(-2px); }
 
         .btn-print { background: #38a169; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-print:hover { background: #2f855a; }
 
         #result-box { display: none; margin-top: 40px; padding-top: 30px; border-top: 2px solid #edf2f7; text-align: left; }
         .result-header { color: #1a365d; margin: 0; font-size: 22px; }
@@ -72,7 +76,7 @@
         @media print {
             body { background: #fff; padding: 0; margin: 0; font-size: 12px;}
             .container { box-shadow: none; border-radius: 0; padding: 0; max-width: 100%; margin: 0; border: none;}
-            .no-print, .mode-selector, .form-grid, .btn-main, #custom-discount-box, #data-status { display: none !important; }
+            .no-print, .mode-selector, .form-grid, .btn-main, .extra-discount-container, #custom-discount-box, #data-status { display: none !important; }
             #result-box { display: block !important; border: none; margin-top: 0; padding-top: 0; }
             #print-title-area { display: block !important; margin-bottom: 15px; }
             * { -webkit-print-color-adjust: exact !important; color-adjust: exact !important; }
@@ -91,7 +95,6 @@
             .full-width { grid-column: span 1; }
             .info-grid-2col { grid-template-columns: 1fr; gap: 15px; }
             .mode-selector { flex-direction: column; gap: 15px; }
-            #extra-details { grid-template-columns: 1fr !important; }
             .custom-table, .schedule-table { display: block; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch;}
         }
     </style>
@@ -155,21 +158,52 @@
             <div id="type-warning"></div>
         </div>
 
-        <div class="form-group full-width" id="auto-extra-discount-box" style="background: #ebf8ff; padding: 15px; border-radius: 6px; border: 1px dashed #3182ce;">
-            <label style="display: flex; align-items: center; gap: 10px; margin: 0; cursor: pointer; color: #2b6cb0; font-size: 16px;">
-                <input type="checkbox" id="enable-extra" onchange="toggleExtraDetails()" style="width: 20px; height: 20px;">
-                <strong>Áp dụng chiết khấu bổ sung (Ngoại giao)</strong>
-            </label>
-            <div id="extra-details" style="display: none; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 15px;">
-                <select id="extra-type" onchange="toggleExtraType()">
-                    <option value="percent">Tính theo Tỷ lệ (%)</option>
-                    <option value="amount">Tính theo Số tiền (VNĐ)</option>
-                </select>
-                <select id="extra-vat">
-                    <option value="after-vat">Tính trên mốc giá SAU VAT</option>
-                    <option value="before-vat">Tính trên mốc giá TRƯỚC VAT</option>
-                </select>
-                <input type="number" id="extra-value" placeholder="Nhập giá trị..." step="0.1">
+        <div class="form-group full-width no-print" id="auto-extra-discount-box">
+            <div class="extra-discount-container">
+                <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; cursor: pointer; color: #2b6cb0;">
+                    <input type="checkbox" id="enable-extra" onchange="toggleExtraDetails()" style="width: 20px; height: 20px;">
+                    <strong>Áp dụng chiết khấu bổ sung (Ngoại giao)</strong>
+                </label>
+                
+                <div id="extra-details-area" style="display: none;">
+                    <div style="margin-bottom: 15px; background: #fff; padding: 10px; border-radius: 6px; border: 1px solid #bee3f8;">
+                        <label style="font-size: 13px; font-weight: bold; color: #2c5282;">Phương thức tính Chiết khấu bổ sung:</label>
+                        <select id="extra-calc-method" style="margin-top: 5px; padding: 8px;">
+                            <option value="sequential">1. Chiết khấu theo thứ tự (Trừ lùi/Lũy kế)</option>
+                            <option value="on-base">2. Đồng bộ Chiết khấu trên giá bán niêm yết</option>
+                        </select>
+                    </div>
+
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%">Loại</th>
+                                <th style="width: 40%">Mốc áp dụng</th>
+                                <th style="width: 25%">Giá trị (% hoặc tiền)</th>
+                                <th style="width: 10%"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="extra-body">
+                            <tr>
+                                <td>
+                                    <select class="ex-type" onchange="handleExTypeChange(this)">
+                                        <option value="percent">Tỷ lệ (%)</option>
+                                        <option value="amount">Số tiền (VNĐ)</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="ex-base">
+                                        <option value="after-vat">Giá sau CK trước (Gồm VAT)</option>
+                                        <option value="before-vat">Giá sau CK trước (Chưa VAT)</option>
+                                    </select>
+                                </td>
+                                <td><input type="number" class="ex-value" placeholder="Giá trị..." step="0.1"></td>
+                                <td><button class="btn-remove" onclick="this.closest('tr').remove()">X</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn-add" onclick="addExtraRow()">+ Thêm dòng chiết khấu</button>
+                </div>
             </div>
         </div>
     </div>
@@ -186,7 +220,7 @@
                 </tr>
             </tbody>
         </table>
-        <button class="btn-add" onclick="addRow()">+ Thêm dòng chiết khấu</button>
+        <button class="btn-add" onclick="addManualRow()">+ Thêm dòng chiết khấu</button>
     </div>
 
     <button class="btn-main no-print" onclick="calculate()">TẠO PHIẾU TÍNH GIÁ</button>
@@ -250,17 +284,12 @@
         const name = document.getElementById('sale-name').value.trim();
         const phone = document.getElementById('sale-phone').value.trim();
         if (!name || !phone) return alert("⚠️ Vui lòng nhập đầy đủ Tên và Số điện thoại!");
-        const nameRegex = /^[\p{L}\s]+$/u;
-        if (!nameRegex.test(name)) return alert("⚠️ Tên không hợp lệ!");
         localStorage.setItem('saleInfo', JSON.stringify({ name, phone }));
         checkSalesLogin();
     }
 
     function logoutSales() {
-        if(confirm("Đăng xuất?")) {
-            localStorage.removeItem('saleInfo');
-            location.reload();
-        }
+        if(confirm("Đăng xuất?")) { localStorage.removeItem('saleInfo'); location.reload(); }
     }
 
     const layGiaTriCot = (item, tenCotCanTim) => {
@@ -283,11 +312,7 @@
         isSpecialType = false;
 
         if (masterData.length === 0 || !codeInput) return;
-
-        const apt = masterData.find(item => {
-            const maCan = layGiaTriCot(item, "ma_can") || layGiaTriCot(item, "Ma_can");
-            return maCan && String(maCan).toUpperCase().trim() === codeInput;
-        });
+        const apt = masterData.find(item => String(layGiaTriCot(item, "ma_can") || layGiaTriCot(item, "Ma_can")).toUpperCase().trim() === codeInput);
 
         if (apt) {
             const typeValue = String(layGiaTriCot(apt, "Type") || "").toUpperCase();
@@ -303,21 +328,17 @@
 
     function initApp() {
         checkSalesLogin();
-        const statusEl = document.getElementById('data-status');
         document.getElementById('deposit-date').valueAsDate = new Date();
         document.getElementById('current-print-date').innerText = getFormattedDate(new Date());
 
-        fetch('Data.json')
-            .then(res => res.json())
-            .then(data => {
-                masterData = Array.isArray(data) ? data : data[Object.keys(data)[0]];
-                statusEl.innerHTML = "🟢 Kết nối dữ liệu thành công!";
-                statusEl.style.color = "green";
-            })
-            .catch(err => {
-                statusEl.innerHTML = "🔴 Lỗi kết nối Data.json!";
-                statusEl.style.color = "red";
-            });
+        fetch('Data.json').then(res => res.json()).then(data => {
+            masterData = Array.isArray(data) ? data : data[Object.keys(data)[0]];
+            document.getElementById('data-status').innerHTML = "🟢 Kết nối dữ liệu thành công!";
+            document.getElementById('data-status').style.color = "green";
+        }).catch(err => {
+            document.getElementById('data-status').innerHTML = "🔴 Lỗi kết nối Data.json!";
+            document.getElementById('data-status').style.color = "red";
+        });
     }
     initApp();
 
@@ -328,14 +349,26 @@
     }
 
     function toggleExtraDetails() {
-        document.getElementById('extra-details').style.display = document.getElementById('enable-extra').checked ? 'grid' : 'none';
+        document.getElementById('extra-details-area').style.display = document.getElementById('enable-extra').checked ? 'block' : 'none';
     }
 
-    function toggleExtraType() {
-        document.getElementById('extra-vat').disabled = (document.getElementById('extra-type').value === 'amount');
+    function handleExTypeChange(el) {
+        const row = el.closest('tr');
+        const baseSelect = row.querySelector('.ex-base');
+        baseSelect.disabled = (el.value === 'amount');
     }
 
-    function addRow() {
+    function addExtraRow() {
+        const row = `<tr>
+            <td><select class="ex-type" onchange="handleExTypeChange(this)"><option value="percent">Tỷ lệ (%)</option><option value="amount">Số tiền (VNĐ)</option></select></td>
+            <td><select class="ex-base"><option value="after-vat">Giá sau CK trước (Gồm VAT)</option><option value="before-vat">Giá sau CK trước (Chưa VAT)</option></select></td>
+            <td><input type="number" class="ex-value" placeholder="Giá trị..." step="0.1"></td>
+            <td><button class="btn-remove" onclick="this.closest('tr').remove()">X</button></td>
+        </tr>`;
+        document.getElementById('extra-body').insertAdjacentHTML('beforeend', row);
+    }
+
+    function addManualRow() {
         const row = `<tr>
             <td><input type="text" class="c-name" placeholder="Lý do chiết khấu..."></td>
             <td><input type="number" class="c-rate" value="0" step="0.1"></td>
@@ -364,18 +397,6 @@
         return getFormattedDate(d);
     }
 
-    function sendDataToSheet(khachHang, maCan, giaNY, tongCK, giaSauCK) {
-        const saleInfo = JSON.parse(localStorage.getItem('saleInfo') || "{}");
-        const payload = {
-            saleName: saleInfo.name || "N/A",
-            salePhone: saleInfo.phone || "N/A",
-            khachHang, maCan, giaNiemYet: giaNY, tongChietKhau: tongCK, giaSauCK
-        };
-        fetch("https://script.google.com/macros/s/AKfycbx9ci5WFYmRsY-bvpQmVU01_Pbzi2Mns1gFGqiZxgllE7noYM_gLLFTC44qAfdclQxEmQ/exec", {
-            method: 'POST', mode: 'no-cors', body: JSON.stringify(payload)
-        }).catch(err => console.log(err));
-    }
-
     function calculate() {
         const codeInput = document.getElementById('apt-code').value.toUpperCase().trim();
         const khachHang = document.getElementById('fullname').value || "Khách lẻ";
@@ -384,44 +405,73 @@
         const apt = masterData.find(item => String(layGiaTriCot(item, "ma_can") || layGiaTriCot(item, "Ma_can")).toUpperCase().trim() === codeInput);
         if (!apt) return alert("Không tìm thấy!");
 
-        const mode = document.querySelector('input[name="calc-mode"]:checked').value;
         const plan = document.getElementById('payment-plan').value;
+        const mode = document.querySelector('input[name="calc-mode"]:checked').value;
 
-        let priceLand = cleanAndParsePrice(layGiaTriCot(apt, "Gia_Dat") || layGiaTriCot(apt, "gia_dat"));
-        let priceBuild = cleanAndParsePrice(layGiaTriCot(apt, "Gia_Xay") || layGiaTriCot(apt, "gia_xay"));
-        let basePrice = cleanAndParsePrice(layGiaTriCot(apt, "Tong_Gia") || layGiaTriCot(apt, "tong_gia"));
+        const priceLand = cleanAndParsePrice(layGiaTriCot(apt, "Gia_Dat") || layGiaTriCot(apt, "gia_dat"));
+        const priceBuild = cleanAndParsePrice(layGiaTriCot(apt, "Gia_Xay") || layGiaTriCot(apt, "gia_xay"));
+        const basePrice = cleanAndParsePrice(layGiaTriCot(apt, "Tong_Gia") || layGiaTriCot(apt, "tong_gia"));
         
         let currentPrice = basePrice;
         let breakdown = "";
 
         if (mode === 'auto') {
-            // Chỉ áp dụng CK mặc định cho sản phẩm thường
+            // 1. CK mặc định (Chỉ hàng thường)
             if (!isSpecialType) {
                 if (plan === '12') {
                     let disc = basePrice * 0.10;
-                    breakdown += `• Chiết khấu tiến độ 12 tháng (10%): <strong>-${formatMoney(disc)}</strong><br>`;
+                    breakdown += `• CK tiến độ 12 tháng (10%): <strong>-${formatMoney(disc)}</strong><br>`;
                     currentPrice -= disc;
                 } else if (plan === '30') {
                     let disc = basePrice * 0.15;
-                    breakdown += `• Chiết khấu thanh toán nhanh 30 ngày (15%): <strong>-${formatMoney(disc)}</strong><br>`;
+                    breakdown += `• CK thanh toán nhanh 30 ngày (15%): <strong>-${formatMoney(disc)}</strong><br>`;
                     currentPrice -= disc;
                 }
             }
 
+            // 2. CK Bổ sung
             if (document.getElementById('enable-extra').checked) {
-                let extraVal = parseFloat(document.getElementById('extra-value').value) || 0;
-                if (extraVal > 0) {
-                    let extraType = document.getElementById('extra-type').value;
-                    let extraVatType = document.getElementById('extra-vat').value;
-                    if (extraType === 'amount') {
-                        breakdown += `• Chiết khấu bổ sung tiền mặt: <strong>-${formatMoney(extraVal)}</strong><br>`;
-                        currentPrice -= extraVal;
-                    } else { 
-                        let ref = (extraVatType === 'before-vat') ? currentPrice / 1.1 : currentPrice;
-                        let extraDisc = ref * (extraVal / 100);
-                        breakdown += `• Chiết khấu bổ sung ${extraVal}%: <strong>-${formatMoney(extraDisc)}</strong><br>`;
-                        currentPrice -= extraDisc;
-                    }
+                const method = document.getElementById('extra-calc-method').value;
+                const rows = document.querySelectorAll('#extra-body tr');
+                
+                if (method === 'sequential') {
+                    // Logic Lũy kế cũ
+                    rows.forEach((row, i) => {
+                        const val = parseFloat(row.querySelector('.ex-value').value) || 0;
+                        if (val > 0) {
+                            const type = row.querySelector('.ex-type').value;
+                            const base = row.querySelector('.ex-base').value;
+                            if (type === 'amount') {
+                                breakdown += `• CK bổ sung tiền mặt #${i+1}: <strong>-${formatMoney(val)}</strong><br>`;
+                                currentPrice -= val;
+                            } else {
+                                let ref = (base === 'before-vat') ? currentPrice / 1.1 : currentPrice;
+                                let disc = ref * (val / 100);
+                                breakdown += `• CK bổ sung #${i+1} (${val}% lũy kế): <strong>-${formatMoney(disc)}</strong><br>`;
+                                currentPrice -= disc;
+                            }
+                        }
+                    });
+                } else {
+                    // Logic Đồng bộ trên giá Niêm yết (basePrice)
+                    let totalExtraSync = 0;
+                    rows.forEach((row, i) => {
+                        const val = parseFloat(row.querySelector('.ex-value').value) || 0;
+                        if (val > 0) {
+                            const type = row.querySelector('.ex-type').value;
+                            const base = row.querySelector('.ex-base').value;
+                            if (type === 'amount') {
+                                totalExtraSync += val;
+                                breakdown += `• CK bổ sung tiền mặt #${i+1}: <strong>-${formatMoney(val)}</strong><br>`;
+                            } else {
+                                let ref = (base === 'before-vat') ? basePrice / 1.1 : basePrice;
+                                let disc = ref * (val / 100);
+                                totalExtraSync += disc;
+                                breakdown += `• CK bổ sung #${i+1} (${val}% trên giá NY): <strong>-${formatMoney(disc)}</strong><br>`;
+                            }
+                        }
+                    });
+                    currentPrice -= totalExtraSync;
                 }
             }
         } else {
@@ -436,9 +486,7 @@
             });
         }
 
-        if (!breakdown) breakdown = "<i>Không có chiết khấu.</i>";
         currentPrice = Math.round(currentPrice / 1000) * 1000;
-
         document.getElementById('out-name').innerText = khachHang;
         document.getElementById('out-code').innerText = codeInput;
         document.getElementById('out-type').innerText = layGiaTriCot(apt, "Type") || "N/A";
@@ -447,24 +495,22 @@
         document.getElementById('out-price-build').innerText = formatMoney(priceBuild);
         document.getElementById('out-price-total').innerText = formatMoney(basePrice);
         document.getElementById('out-price-final').innerText = formatMoney(currentPrice);
-        document.getElementById('discount-breakdown').innerHTML = breakdown;
+        document.getElementById('discount-breakdown').innerHTML = breakdown || "<i>Không có chiết khấu.</i>";
 
         renderSchedule(plan, currentPrice, document.getElementById('deposit-date').value);
         document.getElementById('result-box').style.display = 'block';
         window.scrollTo({ top: document.getElementById('result-box').offsetTop, behavior: 'smooth' });
-        sendDataToSheet(khachHang, codeInput, basePrice, basePrice - currentPrice, currentPrice);
     }
 
     function renderSchedule(plan, finalPrice, depStr) {
         const container = document.getElementById('schedule-content');
         const deposit = 100000000;
         let depObj = new Date(depStr);
-        let hdmbObj = new Date(depStr);
-        hdmbObj.setDate(hdmbObj.getDate() + 10); 
+        let hdmbObj = new Date(depStr); hdmbObj.setDate(hdmbObj.getDate() + 10); 
         
         if (plan === '30' && !isSpecialType) {
             container.innerHTML = `
-                <div class="milestone-container">
+                <div class="milestone-container" style="display:flex; flex-direction:column; gap:10px;">
                     <div style="background:#ebf8ff;padding:15px;border-left:5px solid #3182ce"><strong>1. Cọc:</strong> ${formatMoney(deposit)} (${getFormattedDate(depObj)})</div>
                     <div style="background:#ebf8ff;padding:15px;border-left:5px solid #3182ce"><strong>2. Đợt 1 (30 ngày):</strong> ${formatMoney((finalPrice * 0.95) - deposit)} (${calculateDate(depObj, 30)})</div>
                     <div style="background:#ebf8ff;padding:15px;border-left:5px solid #3182ce"><strong>3. Nhận sổ:</strong> ${formatMoney(finalPrice * 0.05)}</div>
@@ -472,34 +518,20 @@
             return;
         }
 
-        let steps = [];
-        if (plan === '12' || isSpecialType) {
-            steps = [
-                {d: "Lần 1_Ký HĐMB", t: "T", days: 0, p: 0.15},
-                {d: "Lần 2_HĐMB", t: "T+60", days: 60, p: 0.10},
-                {d: "Lần 3_HĐMB", t: "T+120", days: 120, p: 0.10},
-                {d: "Lần 4_HĐMB", t: "T+180", days: 180, p: 0.15},
-                {d: "Lần 5_HĐMB", t: "T+240", days: 240, p: 0.10},
-                {d: "Lần 6_HĐMB", t: "T+300", days: 300, p: 0.10},
-                {d: "Lần 7_Bàn giao (Dự kiến)", t: "T+360", days: 360, p: 0.25},
-                {d: "Lần 8_Nhận GCN", t: "Theo TB", days: null, p: 0.05}
-            ];
-        } else {
-            steps = [
-                {d: "Lần 1_Ký HĐMB", t: "T", days: 0, p: 0.15},
-                {d: "Lần 2_HĐMB", t: "T+120", days: 120, p: 0.10},
-                {d: "Lần 3_HĐMB", t: "T+240", days: 240, p: 0.10},
-                {d: "Lần 4_HĐMB", t: "T+360", days: 360, p: 0.15},
-                {d: "Lần 5_HĐMB", t: "T+480", days: 480, p: 0.05},
-                {d: "Lần 6_HĐMB", t: "T+600", days: 600, p: 0.05},
-                {d: "Lần 7_HĐMB", t: "T+720", days: 720, p: 0.05},
-                {d: "Lần 8_HĐMB", t: "T+840", days: 840, p: 0.05},
-                {d: "Lần 9_Bàn giao", t: "T+1080", days: 1080, p: 0.25},
-                {d: "Lần 10_Nhận GCN", t: "Theo TB", days: null, p: 0.05}
-            ];
-        }
+        let steps = (plan === '12' || isSpecialType) ? [
+            {d: "Lần 1_Ký HĐMB", t: "T", days: 0, p: 0.15}, {d: "Lần 2_HĐMB", t: "T+60", days: 60, p: 0.10},
+            {d: "Lần 3_HĐMB", t: "T+120", days: 120, p: 0.10}, {d: "Lần 4_HĐMB", t: "T+180", days: 180, p: 0.15},
+            {d: "Lần 5_HĐMB", t: "T+240", days: 240, p: 0.10}, {d: "Lần 6_HĐMB", t: "T+300", days: 300, p: 0.10},
+            {d: "Lần 7_Bàn giao (Dự kiến)", t: "T+360", days: 360, p: 0.25}, {d: "Lần 8_Nhận GCN", t: "Theo TB", days: null, p: 0.05}
+        ] : [
+            {d: "Lần 1_Ký HĐMB", t: "T", days: 0, p: 0.15}, {d: "Lần 2_HĐMB", t: "T+120", days: 120, p: 0.10},
+            {d: "Lần 3_HĐMB", t: "T+240", days: 240, p: 0.10}, {d: "Lần 4_HĐMB", t: "T+360", days: 360, p: 0.15},
+            {d: "Lần 5_HĐMB", t: "T+480", days: 480, p: 0.05}, {d: "Lần 6_HĐMB", t: "T+600", days: 600, p: 0.05},
+            {d: "Lần 7_HĐMB", t: "T+720", days: 720, p: 0.05}, {d: "Lần 8_HĐMB", t: "T+840", days: 840, p: 0.05},
+            {d: "Lần 9_Bàn giao Nhà", t: "T+1080", days: 1080, p: 0.25}, {d: "Lần 10_Nhận GCN", t: "Theo TB", days: null, p: 0.05}
+        ];
 
-        let h = `<table class="schedule-table"><tr><th>Đợt</th><th>Thời hạn</th><th>Ngày dự kiến</th><th>Tỉ lệ</th><th>Số tiền</th></tr>`;
+        let h = `<table class="schedule-table"><tr><th>Đợt</th><th>Thời hạn</th><th>Dự kiến</th><th>Tỉ lệ</th><th>Số tiền</th></tr>`;
         h += `<tr style="background:#fff5f5"><td><strong>Đặt cọc</strong></td><td class="td-center">-</td><td class="td-center">${getFormattedDate(depObj)}</td><td class="td-center">-</td><td class="td-right">${formatMoney(deposit)}</td></tr>`;
         steps.forEach((s, i) => {
             let amt = Math.round((finalPrice * s.p) / 1000) * 1000;
