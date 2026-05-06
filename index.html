@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phiếu Tính Giá Flamingo Ba Sao</title>
+    <title>Phiếu Tính Giá Flamingo Golden Hill</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; color: #333; line-height: 1.6; margin: 0; padding: 20px;}
         .container { max-width: 1200px; margin: 10px auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative;}
@@ -328,7 +328,11 @@
 
     function initApp() {
         checkSalesLogin();
-        document.getElementById('deposit-date').valueAsDate = new Date();
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        document.getElementById('deposit-date').value = `${yyyy}-${mm}-${dd}`;
         document.getElementById('current-print-date').innerText = getFormattedDate(new Date());
 
         fetch('Data.json').then(res => res.json()).then(data => {
@@ -505,8 +509,16 @@
     function renderSchedule(plan, finalPrice, depStr) {
         const container = document.getElementById('schedule-content');
         const deposit = 100000000;
-        let depObj = new Date(depStr);
-        let hdmbObj = new Date(depStr); hdmbObj.setDate(hdmbObj.getDate() + 10); 
+
+        if (!depStr) {
+            container.innerHTML = '<p style="color:#e53e3e; font-weight:bold;">⚠️ Vui lòng chọn Ngày đặt cọc để hiển thị tiến độ thanh toán.</p>';
+            return;
+        }
+
+        // Phân tách chuỗi YYYY-MM-DD để tránh lệch múi giờ gây NaN
+        const [depY, depM, depD] = depStr.split('-').map(Number);
+        let depObj = new Date(depY, depM - 1, depD);
+        let hdmbObj = new Date(depY, depM - 1, depD); hdmbObj.setDate(hdmbObj.getDate() + 10); 
         
         if (plan === '30' && !isSpecialType) {
             container.innerHTML = `
