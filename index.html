@@ -3,570 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phiếu Tính Giá Flamingo Golden Hill</title>
+    <title>Đang Cập Nhật Chính Sách sản phẩm mới nhất</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; color: #333; line-height: 1.6; margin: 0; padding: 20px;}
-        .container { max-width: 1200px; margin: 10px auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative;}
-        h1 { color: #1a365d; text-transform: uppercase; margin-bottom: 5px; font-size: 26px; text-align: center;}
-        h2 { color: #2d3748; font-weight: normal; margin-top: 0; margin-bottom: 30px; font-size: 20px; text-align: center;}
-        
-        #data-status { font-weight: bold; margin-bottom: 25px; padding: 10px; border-radius: 6px; display: inline-block; background: #f1f5f9; text-align: center;}
-
-        /* Màn hình đăng nhập */
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 9999; backdrop-filter: blur(5px);}
-        .modal-content { background: #fff; padding: 35px 30px; border-radius: 12px; width: 90%; max-width: 420px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .sale-greeting-box { text-align: right; margin-bottom: 10px; font-size: 14px; color: #4a5568; }
-
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: left; margin-bottom: 30px; }
-        .form-group { display: flex; flex-direction: column; position: relative; }
-        .form-group label { font-weight: 600; margin-bottom: 8px; color: #4a5568; }
-        .form-group input, .form-group select { padding: 12px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 16px; outline: none; transition: 0.2s; }
-        .form-group input:focus, .form-group select:focus { border-color: #1a365d; box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1); }
-        
-        .full-width { grid-column: span 3; }
-        .mode-selector { background: #edf2f7; padding: 20px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 30px; align-items: center; justify-content: center; }
-        .mode-selector label { cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 8px; }
-        
-        /* Chiết khấu bổ sung Box */
-        .extra-discount-container { background: #ebf8ff; border: 1px dashed #3182ce; padding: 20px; border-radius: 8px; margin-top: 10px; }
-        .custom-discount-box { background: #fffaf0; border: 1px dashed #ed8936; padding: 20px; border-radius: 8px; margin-top: 10px; display: none; }
-        
-        .custom-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
-        .custom-table th { font-size: 13px; color: #4a5568; text-align: left; padding-bottom: 8px; }
-        .custom-table input, .custom-table select { width: 95%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }
-        
-        .btn-add { background: #2b6cb0; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 13px; }
-        .btn-remove { background: #e53e3e; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold;}
-
-        .btn-main { background: #1a365d; color: white; border: none; padding: 18px 40px; border-radius: 30px; font-size: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%; margin-top: 10px; }
-        .btn-main:hover { background: #2c5282; transform: translateY(-2px); }
-
-        .btn-print { background: #38a169; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px; }
-
-        #result-box { display: none; margin-top: 40px; padding-top: 30px; border-top: 2px solid #edf2f7; text-align: left; }
-        .result-header { color: #1a365d; margin: 0; font-size: 22px; }
-        
-        .info-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 25px; }
-        .info-col { display: flex; flex-direction: column; gap: 12px; }
-        .info-item { display: flex; justify-content: space-between; border-bottom: 1px dashed #ccc; padding-bottom: 5px; align-items: center;}
-        .info-item span { color: #718096; font-size: 15px; }
-        .info-item strong { color: #2d3748; font-size: 15px; }
-        
-        .price-highlight { background: #fff5f5; padding: 20px; border-radius: 8px; border: 1px solid #feb2b2; margin-bottom: 30px; }
-        .final-price-container { border-top: 1px dashed #fc8181; margin-top: 15px; display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 12px 15px; border-radius: 6px; }
-        .final-price-label { font-size: 20px; color: #c53030; font-weight: bold; }
-        .final-price { color: #e53e3e; font-size: 20px; font-weight: bold; }
-        
-        .discount-detail { font-size: 15px; color: #4a5568; margin-top: 10px; padding-left: 20px; border-left: 3px solid #1a365d; }
-
-        table.schedule-table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #fff; }
-        .schedule-table th { background: #1a365d; color: white; padding: 12px; border: 1px solid #1a365d; text-align: center; font-size: 14px;}
-        .schedule-table td { border: 1px solid #cbd5e0; padding: 12px; vertical-align: middle; font-size: 14px;}
-        .schedule-table tr:nth-child(even) { background: #f7fafc; }
-        .td-center { text-align: center; }
-        .td-right { text-align: right; }
-
-        .copyright-footer { text-align: right; margin-top: 20px; border-top: 1px dashed #cbd5e0; padding-top: 10px; font-size: 12px; color: #a0aec0; font-style: italic; }
-        .copyright-footer strong { color: #4a5568; font-weight: bold; font-style: normal;}
-        
-        #type-warning { display: none; color: #e53e3e; font-size: 14px; font-style: italic; margin-top: 8px; font-weight: bold; padding: 10px; background: #fff5f5; border: 1px solid #feb2b2; border-radius: 6px; }
-
-        @page { size: A4 portrait; margin: 10mm 10mm; }
-
-        @media print {
-            body { background: #fff; padding: 0; margin: 0; font-size: 12px;}
-            .container { box-shadow: none; border-radius: 0; padding: 0; max-width: 100%; margin: 0; border: none;}
-            .no-print, .mode-selector, .form-grid, .btn-main, .extra-discount-container, #custom-discount-box, #data-status { display: none !important; }
-            #result-box { display: block !important; border: none; margin-top: 0; padding-top: 0; }
-            #print-title-area { display: block !important; margin-bottom: 15px; }
-            * { -webkit-print-color-adjust: exact !important; color-adjust: exact !important; }
-            .price-highlight { border: 1px solid #ccc; background: #fff; padding: 15px; }
-            .final-price-container { border: 1px solid #fc8181; background: #fff5f5 !important; }
-            .info-grid-2col { gap: 15px; margin-bottom: 15px; }
-            .copyright-footer { color: #666; border-top: 1px solid #999; margin-top: 10px; padding-top: 5px; }
-            tr { page-break-inside: avoid; }
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f5eae4 0%, #ecc1b2 50%, #d49a89 100%);
+            --text-main: #0f3132;
+            --text-sub: #5c7172;
+            --flamingo-color: #e58e73;
+            --flamingo-dark: #b86248;
         }
 
-        @media screen and (max-width: 768px) {
-            body { padding: 10px; }
-            .container { padding: 20px; margin: 0; }
-            h1 { font-size: 20px; }
-            .form-grid { grid-template-columns: 1fr; gap: 15px; }
-            .full-width { grid-column: span 1; }
-            .info-grid-2col { grid-template-columns: 1fr; gap: 15px; }
-            .mode-selector { flex-direction: column; gap: 15px; }
-            .custom-table, .schedule-table { display: block; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch;}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        /* CSS Nút Link Tài Liệu Dự Án (F-Deal Ver 2) */
-        .btn-info-link {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: #ebf8ff; color: #2b6cb0; text-decoration: none;
-            padding: 10px 20px; border-radius: 6px; font-size: 14px; font-weight: bold;
-            border: 1px dashed #3182ce; transition: 0.3s ease;
+
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: var(--text-main);
         }
-        .btn-info-link:hover {
-            background: #bee3f8; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(49, 130, 206, 0.15);
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 40px 20px;
+            z-index: 2;
+            position: relative;
         }
-        .fdeal-brand {
-            color: #e53e3e; font-weight: bold; font-size: 13px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;
+
+        /* --- Nghệ thuật tạo hình bầy hồng hạc bằng CSS --- */
+        .flamingo-scene {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        /* Chân đế/Mặt nước */
+        .water-line {
+            position: absolute;
+            bottom: 15px;
+            width: 280px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--text-main), transparent);
+            opacity: 0.3;
+        }
+
+        .flamingo {
+            position: relative;
+            width: 60px;
+            height: 160px;
+            margin: 0 10px;
+            transform-origin: bottom center;
+        }
+
+        /* Chi tiết con hồng hạc chính */
+        .flamingo .body {
+            position: absolute;
+            top: 40px;
+            left: 5px;
+            width: 50px;
+            height: 35px;
+            background: var(--flamingo-color);
+            border-radius: 50px 40px 40px 40px;
+            transform: rotate(-10deg);
+            box-shadow: inset -5px -5px 10px var(--flamingo-dark);
+        }
+
+        .flamingo .neck {
+            position: absolute;
+            top: 10px;
+            right: 8px;
+            width: 12px;
+            height: 45px;
+            border-right: 8px solid var(--flamingo-color);
+            border-radius: 0 25px 0 0;
+            transform: rotate(15deg);
+        }
+
+        .flamingo .head {
+            position: absolute;
+            top: 2px;
+            right: 0px;
+            width: 16px;
+            height: 14px;
+            background: var(--flamingo-color);
+            border-radius: 50%;
+        }
+
+        .flamingo .beak {
+            position: absolute;
+            top: 6px;
+            right: -10px;
+            width: 12px;
+            height: 8px;
+            background: var(--text-main);
+            clip-path: polygon(0 0, 100% 50%, 0 100%);
+            transform: rotate(20deg);
+        }
+
+        .flamingo .legs {
+            position: absolute;
+            bottom: 15px;
+            left: 25px;
+            width: 2px;
+            height: 75px;
+            background: var(--flamingo-dark);
+        }
+
+        /* Chân đứng co (đặc trưng của hồng hạc) */
+        .flamingo .legs::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 0;
+            width: 25px;
+            height: 2px;
+            background: var(--flamingo-dark);
+            transform: rotate(45deg);
+            transform-origin: left center;
+        }
+
+        /* Tạo biến thể cho bầy chim (Kích thước và hiệu ứng động) */
+        .flamingo.f1 {
+            transform: scale(0.95);
+            animation: float 4s ease-in-out infinite alternate;
+        }
+
+        .flamingo.f2 {
+            transform: scale(1.1) scaleX(-1); /* Quay mặt hướng ngược lại */
+            filter: brightness(0.9);
+            animation: float 4.5s ease-in-out infinite alternate-reverse;
+            margin-bottom: -5px;
+        }
+
+        .flamingo.f3 {
+            transform: scale(0.85);
+            filter: brightness(0.8);
+            animation: float 3.8s ease-in-out infinite alternate;
+            margin-bottom: 5px;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(var(--tw-scale-x, 1)); }
+            100% { transform: translateY(-6px) scale(var(--tw-scale-x, 1)); }
+        }
+
+        /* --- Phần nội dung thông báo --- */
+        .content h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .content p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--text-sub);
+            margin-bottom: 30px;
+        }
+
+        /* Thanh tiến trình chạy ngầm tinh tế */
+        .progress-bar {
+            width: 180px;
+            height: 3px;
+            background: rgba(15, 49, 50, 0.1);
+            margin: 0 auto 25px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--text-main);
+            animation: loading 2.5s infinite linear;
+        }
+
+        @keyframes loading {
+            0% { left: -100%; }
+            50% { left: 0; }
+            100% { left: 100%; }
+        }
+
+        .footer {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
 
-<div id="sales-modal" class="modal-overlay no-print">
-    <div class="modal-content">
-        <h3 style="color:#1a365d; margin-top:0; font-size: 20px;">ĐĂNG NHẬP HỆ THỐNG</h3>
-        <p style="font-size:14px; color:#666; margin-bottom: 25px;">Vui lòng nhập đúng thông tin để lập phiếu tính giá.</p>
-        <div class="form-group" style="margin-bottom: 15px; text-align:left;">
-            <label>Tên chuyên viên tư vấn (*)</label>
-            <input type="text" id="sale-name" placeholder="Ví dụ: Nguyễn Phương Anh">
-        </div>
-        <div class="form-group" style="margin-bottom: 25px; text-align:left;">
-            <label>Số điện thoại (*)</label>
-            <input type="text" id="sale-phone" placeholder="Ví dụ: 0987654321">
-        </div>
-        <button class="btn-main" style="margin-top:0;" onclick="saveSalesInfo()">XÁC NHẬN BẮT ĐẦU</button>
-    </div>
-</div>
-
-<div class="container">
-    <div id="sale-greeting" class="sale-greeting-box no-print" style="display:none;">
-        👤 Đang tư vấn bởi: <strong id="current-sale-name" style="color:#1a365d;">...</strong> 
-        <a href="#" onclick="logoutSales(); return false;" style="color:#e53e3e; text-decoration:none; margin-left: 10px; font-size: 13px;">(Đăng xuất)</a>
-    </div>
-
-    <div style="text-align: center;" class="no-print">
-        <h1>Phiếu tính giá & Tiến độ thanh toán</h1>
-        <h2>Dự án Flamingo Golden Hill</h2>
-        <div id="data-status">⏳ Đang khởi động hệ thống...</div>
-    </div>
-    <a href="https://drive.google.com/drive/u/0/folders/1I6bZI_T4G-kW-KzB3rSL9AfKonzh_WQk" target="_blank" class="btn-info-link">📁 TÀI LIỆU DỰ ÁN</a>
-
-    <div class="mode-selector no-print">
-        <label><input type="radio" name="calc-mode" value="auto" checked onchange="toggleMode()"> TÍNH TỰ ĐỘNG</label>
-        <label><input type="radio" name="calc-mode" value="custom" onchange="toggleMode()"> TÙY CHỈNH</label>
-    </div>
-
-    <div class="form-grid no-print">
-        <div class="form-group">
-            <label>Tên khách hàng</label>
-            <input type="text" id="fullname" placeholder="Họ và tên khách hàng...">
-        </div>
-        <div class="form-group">
-            <label>Mã căn hộ</label>
-            <input type="text" id="apt-code" placeholder="Nhập mã căn..." oninput="handleAptCodeChange()">
-        </div>
-        <div class="form-group">
-            <label>Ngày đặt cọc</label>
-            <input type="date" id="deposit-date">
-        </div>
-        
-        <div class="form-group full-width">
-            <label>Phương thức thanh toán</label>
-            <select id="payment-plan">
-                <option value="36">Tiến độ chuẩn 36 tháng</option>
-                <option value="12">Tiến độ 12 tháng</option>
-                <option value="30">Thanh toán nhanh trong 30 ngày</option>
-            </select>
-            <div id="type-warning"></div>
-        </div>
-
-        <div class="form-group full-width no-print" id="auto-extra-discount-box">
-            <div class="extra-discount-container">
-                <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px; cursor: pointer; color: #2b6cb0;">
-                    <input type="checkbox" id="enable-extra" onchange="toggleExtraDetails()" style="width: 20px; height: 20px;">
-                    <strong>Áp dụng chiết khấu bổ sung</strong>
-                </label>
-                
-                <div id="extra-details-area" style="display: none;">
-                    <div style="margin-bottom: 15px; background: #fff; padding: 10px; border-radius: 6px; border: 1px solid #bee3f8;">
-                        <label style="font-size: 13px; font-weight: bold; color: #2c5282;">Phương thức tính Chiết khấu bổ sung:</label>
-                        <select id="extra-calc-method" style="margin-top: 5px; padding: 8px;">
-                            <option value="sequential">1. Chiết khấu theo thứ tự (Trừ lùi/Lũy kế)</option>
-                            <option value="on-base">2. Đồng bộ Chiết khấu trên giá bán niêm yết</option>
-                        </select>
-                    </div>
-
-                    <table class="custom-table">
-                        <thead>
-                            <tr>
-                                <th style="width: 25%">Loại</th>
-                                <th style="width: 40%">Mốc áp dụng</th>
-                                <th style="width: 25%">Giá trị (% hoặc tiền)</th>
-                                <th style="width: 10%"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="extra-body">
-                            <tr>
-                                <td>
-                                    <select class="ex-type" onchange="handleExTypeChange(this)">
-                                        <option value="percent">Tỷ lệ (%)</option>
-                                        <option value="amount">Số tiền (VNĐ)</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="ex-base">
-                                        <option value="after-vat">Giá sau CK trước (Gồm VAT)</option>
-                                        <option value="before-vat">Giá sau CK trước (Chưa VAT)</option>
-                                    </select>
-                                </td>
-                                <td><input type="number" class="ex-value" placeholder="Giá trị..." step="0.1"></td>
-                                <td><button class="btn-remove" onclick="this.closest('tr').remove()">X</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button class="btn-add" onclick="addExtraRow()">+ Thêm dòng chiết khấu</button>
-                </div>
+    <div class="container">
+        <div class="flamingo-scene">
+            <div class="flamingo f1">
+                <div class="neck"></div>
+                <div class="head"><div class="beak"></div></div>
+                <div class="body"></div>
+                <div class="legs"></div>
             </div>
+            
+            <div class="flamingo f2">
+                <div class="neck"></div>
+                <div class="head"><div class="beak"></div></div>
+                <div class="body"></div>
+                <div class="legs"></div>
+            </div>
+
+            <div class="flamingo f3">
+                <div class="neck"></div>
+                <div class="head"><div class="beak"></div></div>
+                <div class="body"></div>
+                <div class="legs"></div>
+            </div>
+            
+            <div class="water-line"></div>
+        </div>
+
+        <div class="content">
+            <h1>Chính Sách Đang Cập Nhật</h1>
+            <p>Chúng tôi đang tiến hành cập nhật theo các nội dung mới của chính sách.</p>
+ <p>Mọi thông tin xin liên hệ 096 293 8816.</p>
+        </div>
+
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+        <div class="footer">
+            Cảm ơn bạn đã quan tâm,
+ &copy;R&D - FLV 2026
         </div>
     </div>
 
-    <div id="custom-discount-box" class="custom-discount-box no-print">
-        <label style="font-weight: bold; color: #c05621;">Nhập thủ công các mục chiết khấu (%):</label>
-        <table class="custom-table">
-            <thead><tr><th style="text-align: left;">Nội dung/Lý do</th><th style="text-align: left;">Tỷ lệ (%)</th><th></th></tr></thead>
-            <tbody id="custom-body">
-                <tr>
-                    <td><input type="text" class="c-name" placeholder="Ví dụ: Voucher quà tặng..."></td>
-                    <td><input type="number" class="c-rate" value="0" step="0.1"></td>
-                    <td><button class="btn-remove" onclick="this.closest('tr').remove()">X</button></td>
-                </tr>
-            </tbody>
-        </table>
-        <button class="btn-add" onclick="addManualRow()">+ Thêm dòng chiết khấu</button>
-    </div>
-
-    <button class="btn-main no-print" onclick="calculate()">TẠO PHIẾU TÍNH GIÁ</button>
-
-    <div id="result-box">
-        <div style="text-align: center; display: none; margin-bottom: 30px;" id="print-title-area">
-            <h1>Bảng tính giá & Tiến độ thanh toán</h1>
-            <h2>Dự án Flamingo Golden Hill</h2>
-        </div>
-        <div class="print-header-actions">
-            <h3 class="result-header">CHI TIẾT PHIẾU TÍNH GIÁ</h3>
-            <button class="btn-print no-print" onclick="window.print()">🖨️ TẢI PDF / IN PHIẾU</button>
-        </div>
-        <div class="info-grid-2col">
-            <div class="info-col">
-                <div class="info-item"><span>Khách hàng:</span> <strong id="out-name"></strong></div>
-                <div class="info-item"><span>Mã căn:</span> <strong id="out-code"></strong></div>
-                <div class="info-item"><span>Loại sản phẩm:</span> <strong id="out-type"></strong></div>
-                <div class="info-item"><span>Diện tích đất:</span> <strong><span id="out-area"></span> m2</strong></div>
-            </div>
-            <div class="info-col">
-                <div class="info-item"><span>Giá Đất (đã gồm VAT):</span> <strong id="out-price-land"></strong></div>
-                <div class="info-item"><span>Giá Xây (đã gồm VAT):</span> <strong id="out-price-build"></strong></div>
-                <div class="info-item" style="border-bottom: 2px solid #1a365d;"><span>Tổng Giá Niêm Yết (đã gồm VAT):</span> <strong id="out-price-total" style="font-size: 16px; color: #1a365d;"></strong></div>
-            </div>
-        </div>
-        <div class="price-highlight">
-            <div style="margin-bottom: 5px; font-weight: bold; color: #2d3748;">Chi tiết chiết khấu áp dụng:</div>
-            <div id="discount-breakdown" class="discount-detail"></div>
-            <div class="final-price-container">
-                <span class="final-price-label">GIÁ SAU CHIẾT KHẤU:</span>
-                <span class="final-price" id="out-price-final"></span>
-            </div>
-        </div>
-        <h3 style="color: #1a365d; margin-bottom: 10px; font-size: 18px;">TIẾN ĐỘ THANH TOÁN CHI TIẾT</h3>
-        <div id="schedule-content"></div>
-        <div style="margin-top: 30px; text-align: right; font-style: italic; color: #666; font-size: 13px;">
-            Ngày xuất phiếu: <span id="current-print-date"></span>
-        </div>
-        <div class="copyright-footer">© Developed by <strong>DMD – R&D FLV</strong></div>
-    </div>
-</div>
-
-<script>
-    let masterData = [];
-    let isSpecialType = false;
-
-    function checkSalesLogin() {
-        const saleInfo = localStorage.getItem('saleInfo');
-        if (!saleInfo) {
-            document.getElementById('sales-modal').style.display = 'flex';
-        } else {
-            const info = JSON.parse(saleInfo);
-            document.getElementById('current-sale-name').innerText = info.name;
-            document.getElementById('sales-modal').style.display = 'none';
-            document.getElementById('sale-greeting').style.display = 'block';
-        }
-    }
-
-    function saveSalesInfo() {
-        const name = document.getElementById('sale-name').value.trim();
-        const phone = document.getElementById('sale-phone').value.trim();
-        if (!name || !phone) return alert("⚠️ Vui lòng nhập đầy đủ Tên và Số điện thoại!");
-        localStorage.setItem('saleInfo', JSON.stringify({ name, phone }));
-        checkSalesLogin();
-    }
-
-    function logoutSales() {
-        if(confirm("Đăng xuất?")) { localStorage.removeItem('saleInfo'); location.reload(); }
-    }
-
-    const layGiaTriCot = (item, tenCotCanTim) => {
-        const keyThucTe = Object.keys(item).find(k => k.trim().toLowerCase() === tenCotCanTim.toLowerCase());
-        return keyThucTe ? item[keyThucTe] : null;
-    };
-
-    function handleAptCodeChange() {
-        const codeInput = document.getElementById('apt-code').value.toUpperCase().trim();
-        const planSelect = document.getElementById('payment-plan');
-        const warningEl = document.getElementById('type-warning');
-
-        planSelect.innerHTML = `
-            <option value="36">Tiến độ chuẩn 36 tháng</option>
-            <option value="12">Tiến độ 12 tháng</option>
-            <option value="30">Thanh toán nhanh trong 30 ngày</option>
-        `;
-        planSelect.disabled = false;
-        warningEl.style.display = 'none';
-        isSpecialType = false;
-
-        if (masterData.length === 0 || !codeInput) return;
-        const apt = masterData.find(item => String(layGiaTriCot(item, "ma_can") || layGiaTriCot(item, "Ma_can")).toUpperCase().trim() === codeInput);
-
-        if (apt) {
-            const typeValue = String(layGiaTriCot(apt, "Type") || "").toUpperCase();
-            if (typeValue.includes("CHUẨN QUỐC TẾ") || typeValue.includes("SIÊU DÒNG TIỀN")) {
-                isSpecialType = true;
-                planSelect.innerHTML = `<option value="12">Tiến độ 12 tháng</option>`;
-                planSelect.disabled = true;
-                warningEl.innerHTML = "⚠️ Sản phẩm đặc thù: Mặc định áp dụng tiến độ 12 tháng, không áp dụng chiết khấu mặc định.";
-                warningEl.style.display = 'block';
-            }
-        }
-    }
-
-    function initApp() {
-        checkSalesLogin();
-        const today = new Date();
-        const yyyy = today.getFullYear();
-        const mm = String(today.getMonth() + 1).padStart(2, '0');
-        const dd = String(today.getDate()).padStart(2, '0');
-        document.getElementById('deposit-date').value = `${yyyy}-${mm}-${dd}`;
-        document.getElementById('current-print-date').innerText = getFormattedDate(new Date());
-
-        fetch('Data.json').then(res => res.json()).then(data => {
-            masterData = Array.isArray(data) ? data : data[Object.keys(data)[0]];
-            document.getElementById('data-status').innerHTML = "🟢 Kết nối dữ liệu thành công!";
-            document.getElementById('data-status').style.color = "green";
-        }).catch(err => {
-            document.getElementById('data-status').innerHTML = "🔴 Lỗi kết nối Data.json!";
-            document.getElementById('data-status').style.color = "red";
-        });
-    }
-    initApp();
-
-    function toggleMode() {
-        const mode = document.querySelector('input[name="calc-mode"]:checked').value;
-        document.getElementById('custom-discount-box').style.display = (mode === 'custom' ? 'block' : 'none');
-        document.getElementById('auto-extra-discount-box').style.display = (mode === 'auto' ? 'block' : 'none');
-    }
-
-    function toggleExtraDetails() {
-        document.getElementById('extra-details-area').style.display = document.getElementById('enable-extra').checked ? 'block' : 'none';
-    }
-
-    function handleExTypeChange(el) {
-        const row = el.closest('tr');
-        const baseSelect = row.querySelector('.ex-base');
-        baseSelect.disabled = (el.value === 'amount');
-    }
-
-    function addExtraRow() {
-        const row = `<tr>
-            <td><select class="ex-type" onchange="handleExTypeChange(this)"><option value="percent">Tỷ lệ (%)</option><option value="amount">Số tiền (VNĐ)</option></select></td>
-            <td><select class="ex-base"><option value="after-vat">Giá sau CK trước (Gồm VAT)</option><option value="before-vat">Giá sau CK trước (Chưa VAT)</option></select></td>
-            <td><input type="number" class="ex-value" placeholder="Giá trị..." step="0.1"></td>
-            <td><button class="btn-remove" onclick="this.closest('tr').remove()">X</button></td>
-        </tr>`;
-        document.getElementById('extra-body').insertAdjacentHTML('beforeend', row);
-    }
-
-    function addManualRow() {
-        const row = `<tr>
-            <td><input type="text" class="c-name" placeholder="Lý do chiết khấu..."></td>
-            <td><input type="number" class="c-rate" value="0" step="0.1"></td>
-            <td><button class="btn-remove" onclick="this.closest('tr').remove()">X</button></td>
-        </tr>`;
-        document.getElementById('custom-body').insertAdjacentHTML('beforeend', row);
-    }
-
-    function cleanAndParsePrice(val) {
-        if (!val) return 0;
-        return Number(String(val).replace(/\s+/g, '').replace(/[^0-9]/g, '')) || 0;
-    }
-
-    function formatMoney(num) {
-        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(Math.round(num));
-    }
-
-    function getFormattedDate(dateObj) {
-        return `${String(dateObj.getDate()).padStart(2, '0')}/${String(dateObj.getMonth() + 1).padStart(2, '0')}/${dateObj.getFullYear()}`;
-    }
-
-    function calculateDate(baseDate, daysToAdd) {
-        if (daysToAdd === null) return "Theo TB";
-        let d = new Date(baseDate);
-        d.setDate(d.getDate() + daysToAdd);
-        return getFormattedDate(d);
-    }
-
-    function calculate() {
-        const codeInput = document.getElementById('apt-code').value.toUpperCase().trim();
-        const khachHang = document.getElementById('fullname').value || "Khách lẻ";
-        if (!codeInput) return alert("Nhập mã căn!");
-
-        const apt = masterData.find(item => String(layGiaTriCot(item, "ma_can") || layGiaTriCot(item, "Ma_can")).toUpperCase().trim() === codeInput);
-        if (!apt) return alert("Không tìm thấy!");
-
-        const plan = document.getElementById('payment-plan').value;
-        const mode = document.querySelector('input[name="calc-mode"]:checked').value;
-
-        const priceLand = cleanAndParsePrice(layGiaTriCot(apt, "Gia_Dat") || layGiaTriCot(apt, "gia_dat"));
-        const priceBuild = cleanAndParsePrice(layGiaTriCot(apt, "Gia_Xay") || layGiaTriCot(apt, "gia_xay"));
-        const basePrice = cleanAndParsePrice(layGiaTriCot(apt, "Tong_Gia") || layGiaTriCot(apt, "tong_gia"));
-        
-        let currentPrice = basePrice;
-        let breakdown = "";
-
-        if (mode === 'auto') {
-            // 1. CK mặc định (Chỉ hàng thường)
-            if (!isSpecialType) {
-                if (plan === '12') {
-                    let disc = basePrice * 0.10;
-                    breakdown += `• CK tiến độ 12 tháng (10%): <strong>-${formatMoney(disc)}</strong><br>`;
-                    currentPrice -= disc;
-                } else if (plan === '30') {
-                    let disc = basePrice * 0.15;
-                    breakdown += `• CK thanh toán nhanh 30 ngày (15%): <strong>-${formatMoney(disc)}</strong><br>`;
-                    currentPrice -= disc;
-                }
-            }
-
-            // 2. CK Bổ sung
-            if (document.getElementById('enable-extra').checked) {
-                const method = document.getElementById('extra-calc-method').value;
-                const rows = document.querySelectorAll('#extra-body tr');
-                
-                if (method === 'sequential') {
-                    // Logic Lũy kế cũ
-                    rows.forEach((row, i) => {
-                        const val = parseFloat(row.querySelector('.ex-value').value) || 0;
-                        if (val > 0) {
-                            const type = row.querySelector('.ex-type').value;
-                            const base = row.querySelector('.ex-base').value;
-                            if (type === 'amount') {
-                                breakdown += `• CK bổ sung tiền mặt #${i+1}: <strong>-${formatMoney(val)}</strong><br>`;
-                                currentPrice -= val;
-                            } else {
-                                let ref = (base === 'before-vat') ? currentPrice / 1.1 : currentPrice;
-                                let disc = ref * (val / 100);
-                                breakdown += `• CK bổ sung #${i+1} (${val}% lũy kế): <strong>-${formatMoney(disc)}</strong><br>`;
-                                currentPrice -= disc;
-                            }
-                        }
-                    });
-                } else {
-                    // Logic Đồng bộ trên giá Niêm yết (basePrice)
-                    let totalExtraSync = 0;
-                    rows.forEach((row, i) => {
-                        const val = parseFloat(row.querySelector('.ex-value').value) || 0;
-                        if (val > 0) {
-                            const type = row.querySelector('.ex-type').value;
-                            const base = row.querySelector('.ex-base').value;
-                            if (type === 'amount') {
-                                totalExtraSync += val;
-                                breakdown += `• CK bổ sung tiền mặt #${i+1}: <strong>-${formatMoney(val)}</strong><br>`;
-                            } else {
-                                let ref = (base === 'before-vat') ? basePrice / 1.1 : basePrice;
-                                let disc = ref * (val / 100);
-                                totalExtraSync += disc;
-                                breakdown += `• CK bổ sung #${i+1} (${val}% trên giá NY): <strong>-${formatMoney(disc)}</strong><br>`;
-                            }
-                        }
-                    });
-                    currentPrice -= totalExtraSync;
-                }
-            }
-        } else {
-            document.querySelectorAll('#custom-body tr').forEach(row => {
-                let n = row.querySelector('.c-name').value;
-                let r = parseFloat(row.querySelector('.c-rate').value) / 100;
-                if (r > 0) {
-                    let disc = currentPrice * r;
-                    breakdown += `• ${n || 'CK'}: <strong>-${formatMoney(disc)}</strong><br>`;
-                    currentPrice -= disc;
-                }
-            });
-        }
-
-        currentPrice = Math.round(currentPrice / 1000) * 1000;
-        document.getElementById('out-name').innerText = khachHang;
-        document.getElementById('out-code').innerText = codeInput;
-        document.getElementById('out-type').innerText = layGiaTriCot(apt, "Type") || "N/A";
-        document.getElementById('out-area').innerText = layGiaTriCot(apt, "Dien_tich") || "0";
-        document.getElementById('out-price-land').innerText = formatMoney(priceLand);
-        document.getElementById('out-price-build').innerText = formatMoney(priceBuild);
-        document.getElementById('out-price-total').innerText = formatMoney(basePrice);
-        document.getElementById('out-price-final').innerText = formatMoney(currentPrice);
-        document.getElementById('discount-breakdown').innerHTML = breakdown || "<i>Không có chiết khấu.</i>";
-
-        renderSchedule(plan, currentPrice, document.getElementById('deposit-date').value);
-        document.getElementById('result-box').style.display = 'block';
-        window.scrollTo({ top: document.getElementById('result-box').offsetTop, behavior: 'smooth' });
-    }
-
-    function renderSchedule(plan, finalPrice, depStr) {
-        const container = document.getElementById('schedule-content');
-        const deposit = 100000000;
-
-        if (!depStr) {
-            container.innerHTML = '<p style="color:#e53e3e; font-weight:bold;">⚠️ Vui lòng chọn Ngày đặt cọc để hiển thị tiến độ thanh toán.</p>';
-            return;
-        }
-
-        // Phân tách chuỗi YYYY-MM-DD để tránh lệch múi giờ gây NaN
-        const [depY, depM, depD] = depStr.split('-').map(Number);
-        let depObj = new Date(depY, depM - 1, depD);
-        let hdmbObj = new Date(depY, depM - 1, depD); hdmbObj.setDate(hdmbObj.getDate() + 10); 
-        
-        if (plan === '30' && !isSpecialType) {
-            container.innerHTML = `
-                <div class="milestone-container" style="display:flex; flex-direction:column; gap:10px;">
-                    <div style="background:#ebf8ff;padding:15px;border-left:5px solid #3182ce"><strong>1. Cọc:</strong> ${formatMoney(deposit)} (${getFormattedDate(depObj)})</div>
-                    <div style="background:#ebf8ff;padding:15px;border-left:5px solid #3182ce"><strong>2. Đợt 1 (30 ngày):</strong> ${formatMoney((finalPrice * 0.95) - deposit)} (${calculateDate(depObj, 30)})</div>
-                    <div style="background:#ebf8ff;padding:15px;border-left:5px solid #3182ce"><strong>3. Nhận sổ:</strong> ${formatMoney(finalPrice * 0.05)}</div>
-                </div>`;
-            return;
-        }
-
-        let steps = (plan === '12' || isSpecialType) ? [
-            {d: "Lần 1_Ký HĐMB", t: "T", days: 0, p: 0.15}, {d: "Lần 2_HĐMB", t: "T+60", days: 60, p: 0.10},
-            {d: "Lần 3_HĐMB", t: "T+120", days: 120, p: 0.10}, {d: "Lần 4_HĐMB", t: "T+180", days: 180, p: 0.15},
-            {d: "Lần 5_HĐMB", t: "T+240", days: 240, p: 0.10}, {d: "Lần 6_HĐMB", t: "T+300", days: 300, p: 0.10},
-            {d: "Lần 7_Bàn giao (Dự kiến)", t: "T+360", days: 360, p: 0.25}, {d: "Lần 8_Nhận GCN", t: "Theo TB", days: null, p: 0.05}
-        ] : [
-            {d: "Lần 1_Ký HĐMB", t: "T", days: 0, p: 0.15}, {d: "Lần 2_HĐMB", t: "T+120", days: 120, p: 0.10},
-            {d: "Lần 3_HĐMB", t: "T+240", days: 240, p: 0.10}, {d: "Lần 4_HĐMB", t: "T+360", days: 360, p: 0.15},
-            {d: "Lần 5_HĐMB", t: "T+480", days: 480, p: 0.05}, {d: "Lần 6_HĐMB", t: "T+600", days: 600, p: 0.05},
-            {d: "Lần 7_HĐMB", t: "T+720", days: 720, p: 0.05}, {d: "Lần 8_HĐMB", t: "T+840", days: 840, p: 0.05},
-            {d: "Lần 9_Bàn giao Nhà", t: "T+1080", days: 1080, p: 0.25}, {d: "Lần 10_Nhận GCN", t: "Theo TB", days: null, p: 0.05}
-        ];
-
-        let h = `<table class="schedule-table"><tr><th>Đợt</th><th>Thời hạn</th><th>Dự kiến</th><th>Tỉ lệ</th><th>Số tiền</th></tr>`;
-        h += `<tr style="background:#fff5f5"><td><strong>Đặt cọc</strong></td><td class="td-center">-</td><td class="td-center">${getFormattedDate(depObj)}</td><td class="td-center">-</td><td class="td-right">${formatMoney(deposit)}</td></tr>`;
-        steps.forEach((s, i) => {
-            let amt = Math.round((finalPrice * s.p) / 1000) * 1000;
-            let note = (i === 0) ? `<br><small>Nộp thêm: ${formatMoney(amt - deposit)}</small>` : "";
-            h += `<tr><td>${s.d}</td><td class="td-center">${s.t}</td><td class="td-center">${calculateDate(hdmbObj, s.days)}</td><td class="td-center">${s.p*100}%</td><td class="td-right"><strong>${formatMoney(amt)}</strong>${note}</td></tr>`;
-        });
-        h += `<tr style="background:#edf2f7"><td colspan="3" class="td-right"><strong>Tổng:</strong></td><td class="td-center">100%</td><td class="td-right"><strong>${formatMoney(finalPrice)}</strong></td></tr></table>`;
-        container.innerHTML = h;
-    }
-</script>
 </body>
 </html>
